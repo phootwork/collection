@@ -1,0 +1,32 @@
+{
+	"keywords" : [
+		"collection",
+		"collections",
+		"list",
+		"set",
+		"map",
+		"queue",
+		"stack"
+	],
+	"autoload" : {
+		"psr-4" : {
+			"phootwork\\collection\\" : "src"
+		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"phootwork\\collection\\tests\\" : "tests"
+		}
+	},
+	"name" : "phootwork/collection",
+	"type" : "library",
+	"description" : "PHP Collections library (List, Set, Map, Queue & Stack)",
+	"license" : "MIT",
+	"require" : {
+		"php" : ">=5.4",
+		"phootwork/lang" : "~0"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "~4"
+	}
+}
