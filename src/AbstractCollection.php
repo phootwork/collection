@@ -1,6 +1,8 @@
 <?php
 namespace phootwork\collection;
 
+use phootwork\lang\Comparator;
+
 /**
  * AbstractCollection providing implemention for the Collection interface. 
  * 
@@ -58,6 +60,26 @@ abstract class AbstractCollection implements Collection {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Internal sort function
+	 * 
+	 * @param array $collection the collection on which is operated on
+	 * @param Comparator|callable $cmp the compare function
+	 * @param callable $usort the sort function for user passed $cmd
+	 * @param callable $sort the default sort function
+	 */
+	protected function doSort(&$collection, $cmp, callable $usort, callable $sort) {
+		if (is_callable($cmp)) {
+			$usort($collection, $cmp);
+		} else if ($cmp instanceof Comparator) {
+			$usort($collection, function ($a, $b) use ($cmp) {
+				return $cmp->compare($a, $b);
+			});
+		} else {
+			$sort($collection);
+		}
 	}
 
 	/**

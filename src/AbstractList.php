@@ -29,15 +29,7 @@ abstract class AbstractList extends AbstractCollection {
 	 * @return $this
 	 */
 	public function sort($cmp = null) {
-		if (is_callable($cmp)) {
-			usort($this->collection, $cmp);
-		} else if ($cmp instanceof Comparator) {
-			usort($this->collection, function ($a, $b) use ($cmp) {
-				return $cmp->compare($a, $b);
-			});
-		} else {
-			sort($this->collection);
-		}
+		$this->doSort($this->collection, $cmp, 'usort', 'sort');
 
 		return $this;
 	}

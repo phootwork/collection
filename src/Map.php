@@ -110,15 +110,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return $this
 	 */
 	public function sort($cmp = null) {
-		if (is_callable($cmp)) {
-			uasort($this->collection, $cmp);
-		} else if ($cmp instanceof Comparator) {
-			uasort($this->collection, function ($a, $b) use ($cmp) {
-				return $cmp->compare($a, $b);
-			});
-		} else {
-			asort($this->collection);
-		}
+		$this->doSort($this->collection, $cmp, 'uasort', 'asort');
 	
 		return $this;
 	}
@@ -130,15 +122,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return $this
 	 */
 	public function sortKeys($cmp = null) {
-		if (is_callable($cmp)) {
-			uksort($this->collection, $cmp);
-		} else if ($cmp instanceof Comparator) {
-			uksort($this->collection, function ($a, $b) use ($cmp) {
-				return $cmp->compare($a, $b);
-			});
-		} else {
-			ksort($this->collection);
-		}
+		$this->doSort($this->collection, $cmp, 'uksort', 'ksort');
 	
 		return $this;
 	}
