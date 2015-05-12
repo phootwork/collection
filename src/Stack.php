@@ -34,7 +34,7 @@ class Stack extends AbstractList {
 	/**
 	 * Pushes many elements onto the stack
 	 *
-	 * @param array|Collection $element
+	 * @param array|Collection $collection
 	 * @return Stack $this
 	 */
 	public function pushAll($collection) {

@@ -13,7 +13,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	/**
 	 * Creates a new Map
 	 * 
-	 * @param array|Map $data
+	 * @param array|Map $collection
 	 */
 	public function __construct($collection = []) {
 		$this->setAll($collection);
@@ -36,6 +36,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * Returns the element for the given key or nothing if the key does not exist.
 	 * 
 	 * @param string $key
+	 * @return mixed
 	 */
 	public function get($key) {
 		if (isset($this->collection[$key])) {

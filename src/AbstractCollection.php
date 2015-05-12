@@ -98,7 +98,7 @@ abstract class AbstractCollection implements Collection {
 	/**
 	 * @internal
 	 */
-	function __clone() {
+	public function __clone() {
 		return new static($this->collection);
 	}
 
