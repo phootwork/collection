@@ -1,8 +1,8 @@
 # PHP Collections library
 
-[![Build Status](https://travis-ci.org/gossi/collection.svg?branch=master)](https://travis-ci.org/gossi/collection)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gossi/collection/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gossi/collection/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/gossi/collection/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/gossi/collection/?branch=master)
+[![Build Status](https://travis-ci.org/phootwork/collection.svg?branch=master)](https://travis-ci.org/phootwork/collection)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phootwork/collection/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phootwork/collection/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/phootwork/collection/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/phootwork/collection/?branch=master)
 
 PHP Collections library, which contains ArrayList, Set, Map, Queue & Stack.
 
@@ -13,7 +13,7 @@ Install via Composer:
 ```json
 {
 	"require": {
-		"gossi/collection": "~1"
+		"phootwork/collection": "~1"
 	}
 }
 ```
@@ -38,7 +38,7 @@ All classes contain phpdoc, so your lovely IDE will provide you with content ass
 
 Filtering works with anonymous functions:
 
-```
+```php
 $list = new ArrayList([1, 2, 3, 4, 5, 6]);
 $list2 = $list->filter(function ($item) {
 	return $item & 1;
@@ -50,7 +50,7 @@ print_r($list2); // [1, 3, 5]
 
 Mapping works with anonymous functions:
 
-```
+```php
 $list = new ArrayList([2, 3, 4]);
 $list2 = $list->map(function ($item) {
 	return $item * $item;
@@ -58,17 +58,18 @@ $list2 = $list->map(function ($item) {
 print_r($list2); // [4, 9, 16]
 ```
 
+### Searching
+
+Searching works with an anonymous function to enable you to search your data structure
+
+```php
+$list = new ArrayList(range(1, 10));
+		
+$found = $list->search(4, function ($elem, $query) { // $query has the value 4 as you've just passed in
+	return $elem == $query;
+});
+```
+
 ## Contributing
 
 Feel free to fork and submit a pull request (don't forget the tests) and I am happy to merge.
-
-## Changelog
-
-Version 1.1 - *Oktober, 18th 2014*
-
-* Full phpdoc
-* Added clone functionality
-
-Version 1.0 - *September, 24th 2014*
-
-* Initial release

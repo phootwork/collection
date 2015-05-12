@@ -74,7 +74,7 @@ abstract class AbstractCollection implements Collection {
 		if (is_callable($cmp)) {
 			$usort($collection, $cmp);
 		} else if ($cmp instanceof Comparator) {
-			$usort($collection, function ($a, $b) use ($cmp) {
+			$usort($collection, function($a, $b) use ($cmp) {
 				return $cmp->compare($a, $b);
 			});
 		} else {
