@@ -2,6 +2,7 @@
 namespace phootwork\collection\tests;
 
 use phootwork\collection\ArrayList;
+use phootwork\collection\CollectionUtils;
 
 class AbstractCollectionTest extends \PHPUnit_Framework_TestCase {
 	
@@ -47,4 +48,15 @@ class AbstractCollectionTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($data, $elements);
 		$this->assertSame($elements, $keyelems);
 	}
+	
+	public function testExport() {
+		$data = [1, 2, ['a' => 'b'], 4];
+		$map = CollectionUtils::fromArray($data);
+		$this->assertSame($data, $map->toArray());
+		
+		$data = ['a' => 'b', 'c' => [1, 2, 4], 'd' => 'e'];
+		$list = CollectionUtils::fromArray($data);
+		$this->assertSame($data, $list->toArray());
+	}
+	
 }

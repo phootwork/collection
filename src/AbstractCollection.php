@@ -29,7 +29,12 @@ abstract class AbstractCollection implements Collection {
 	}
 	
 	public function toArray() {
-		return $this->collection;
+		return array_map(function ($v) {
+			if (is_object($v) && method_exists($v, 'toArray')) {
+				return $v->toArray();
+			}
+			return $v;
+		}, $this->collection);
 	}
 	
 	/**
