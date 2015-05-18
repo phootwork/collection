@@ -50,11 +50,11 @@ class AbstractCollectionTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testExport() {
-		$data = [1, 2, ['a' => 'b'], 4];
+		$data = [1, 2, ['a' => 'b', 'c' => [7, 8, 9]], 4];
 		$map = CollectionUtils::fromArray($data);
 		$this->assertSame($data, $map->toArray());
 		
-		$data = ['a' => 'b', 'c' => [1, 2, 4], 'd' => 'e'];
+		$data = ['a' => 'b', 'c' => [1, ['x' => 'y'], 4], 'd' => 'e'];
 		$list = CollectionUtils::fromArray($data);
 		$this->assertSame($data, $list->toArray());
 	}

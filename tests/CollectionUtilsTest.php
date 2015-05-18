@@ -35,6 +35,11 @@ class CollectionUtilsTest extends \PHPUnit_Framework_TestCase {
 		
 		$this->assertTrue($map instanceof Map);
 		$this->assertTrue($map->get('a') instanceof ArrayList);
+		
+		
+		$data = ['a' => 'b', 'c' => [1, ['x' => 'y'], 4], 'd' => 'e'];
+		$map = CollectionUtils::fromArray($data);
+		$this->assertTrue($map->get('c')->get(1) instanceof Map);
 	}
 	
 }
