@@ -54,7 +54,8 @@ class MapTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($item3, $map->get($key2));
 		
 		$this->assertEmpty($map->get('non_existing_key'));
-		$this->assertEmpty($map->remove('non_existing_key'));		
+		$this->assertEmpty($map->remove('non_existing_key'));
+		$this->assertEquals([], $map->get('non_existing_key', []));
 	}
 	
 	public function testToArray() {
