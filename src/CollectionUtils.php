@@ -6,16 +6,29 @@ class CollectionUtils {
 	/**
 	 * Returns a proper collection for the given array (works with nested collections)
 	 * 
-	 * @param array $array
+	 * @param array|Collection $array
 	 * @return Map|ArrayList the collection
 	 * @throws \InvalidArgumentException
 	 */
-	public static function fromArray($array) {
+	public static function fromCollection($array) {
+		if ($array instanceof Collection) {
+			return $array;
+		}
+		
 		if (!is_array($array)) {
 			throw new \InvalidArgumentException('$array is not an array');
 		}
 		
 		return self::toCollection(json_decode(json_encode($array)));
+	}
+	
+	/**
+	 * @deprecated use fromCollection instead
+	 * @param array $array
+	 * @return Map|ArrayList the collection
+	 */
+	public static function fromArray($array) {
+		return self::fromCollection($array);
 	}
 	
 	private static function toCollection($data) {

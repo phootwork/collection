@@ -13,7 +13,7 @@ abstract class AbstractCollection implements Collection {
 	protected $collection = [];
 	
 	public function contains($element) {
-		return in_array($element, $this->collection);
+		return in_array($element, $this->collection, true);
 	}
 	
 	public function size() {
