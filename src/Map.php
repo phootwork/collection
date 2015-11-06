@@ -1,6 +1,7 @@
 <?php
 namespace phootwork\collection;
 
+use \Iterator;
 use phootwork\lang\Comparator;
 
 /**
@@ -13,7 +14,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	/**
 	 * Creates a new Map
 	 * 
-	 * @param array|Map $collection
+	 * @param array|Iterator $collection
 	 */
 	public function __construct($collection = []) {
 		$this->setAll($collection);
@@ -65,7 +66,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	/**
 	 * Sets many elements on that map
 	 * 
-	 * @param array|Map $collection
+	 * @param array|Iterator $collection
 	 * @return Map $this
 	 */
 	public function setAll($collection) {

@@ -1,6 +1,8 @@
 <?php
 namespace phootwork\collection;
 
+use \Iterator;
+
 /**
  * Represents a Queue
  * 
@@ -13,7 +15,7 @@ class Queue extends AbstractList {
 	/**
 	 * Creates a new Queue
 	 * 
-	 * @param array|Collection $collection
+	 * @param array|Iterator $collection
 	 */
 	public function __construct($collection = []) {
 		$this->enqueueAll($collection);
@@ -23,7 +25,7 @@ class Queue extends AbstractList {
 	 * Enqueues an element
 	 * 
 	 * @param mixed $element
-	 * @return Queue $this
+	 * @return $this
 	 */
 	public function enqueue($element) {
 		$this->collection[$this->size()] = $element;
@@ -34,8 +36,8 @@ class Queue extends AbstractList {
 	/**
 	 * Enqueues many elements
 	 *
-	 * @param array|Collection $collection
-	 * @return Queue $this
+	 * @param array|Iterator $collection
+	 * @return $this
 	 */
 	public function enqueueAll($collection) {
 		foreach ($collection as $element) {

@@ -1,6 +1,8 @@
 <?php
 namespace phootwork\collection;
 
+use \Iterator;
+
 /**
  * Represents a Set
  * 
@@ -11,7 +13,7 @@ class Set extends AbstractCollection {
 	/**
 	 * Creates a new Set
 	 * 
-	 * @param array|Collection $collection
+	 * @param array|Iterator $collection
 	 */
 	public function __construct($collection = []) {
 		$this->addAll($collection);
@@ -21,7 +23,7 @@ class Set extends AbstractCollection {
 	 * Adds an element to that set
 	 * 
 	 * @param mixed $element
-	 * @return Set $this
+	 * @return $this
 	 */
 	public function add($element) {
 		if (!in_array($element, $this->collection)) {
@@ -34,8 +36,8 @@ class Set extends AbstractCollection {
 	/**
 	 * Adds all elements to the set
 	 * 
-	 * @param array|Collection $collection
-	 * @return Set $this
+	 * @param array|Iterator $collection
+	 * @return $this
 	 */
 	public function addAll($collection) {
 		foreach ($collection as $element) {
@@ -49,7 +51,7 @@ class Set extends AbstractCollection {
 	 * Removes an element from the set
 	 * 
 	 * @param mixed $element
-	 * @return Set $this
+	 * @return $this
 	 */
 	public function remove($element) {
 		$index = array_search($element, $this->collection, true);
@@ -63,7 +65,7 @@ class Set extends AbstractCollection {
 	/**
 	 * Removes all elements from the set
 	 *
-	 * @param array|Collection $collection
+	 * @param array|Iterator $collection
 	 */
 	public function removeAll($collection) {
 		foreach ($collection as $element) {

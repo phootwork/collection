@@ -4,6 +4,7 @@ namespace phootwork\collection\tests;
 use phootwork\collection\CollectionUtils;
 use phootwork\collection\ArrayList;
 use phootwork\collection\Map;
+use phootwork\collection\tests\fixtures\DummyIteratorClass;
 
 class CollectionUtilsTest extends \PHPUnit_Framework_TestCase {
 	
@@ -80,5 +81,13 @@ class CollectionUtilsTest extends \PHPUnit_Framework_TestCase {
 		$list = new ArrayList($data);
 		$this->assertEquals('b', $list->get(0));
 		$this->assertFalse($list->get(2) instanceof Map);
+	}
+	
+	public function testNonsense() {
+		$dummy = new DummyIteratorClass(range(10, 20));
+		
+		$map = CollectionUtils::fromCollection($dummy);
+		
+		$this->assertTrue($map instanceof Map);
 	}
 }

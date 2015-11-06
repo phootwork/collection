@@ -1,6 +1,8 @@
 <?php
 namespace phootwork\collection;
 
+use \Iterator;
+
 /**
  * Represents a Stack
  * 
@@ -13,7 +15,7 @@ class Stack extends AbstractList {
 	/**
 	 * Creates a new ArrayList
 	 * 
-	 * @param array|Collection $collection
+	 * @param array|Iterator $collection
 	 */
 	public function __construct($collection = []) {
 		$this->pushAll($collection);
@@ -23,7 +25,7 @@ class Stack extends AbstractList {
 	 * Pushes an element onto the stack
 	 * 
 	 * @param mixed $element
-	 * @return Stack $this
+	 * @return $this
 	 */
 	public function push($element) {
 		array_unshift($this->collection, $element);
@@ -34,8 +36,8 @@ class Stack extends AbstractList {
 	/**
 	 * Pushes many elements onto the stack
 	 *
-	 * @param array|Collection $collection
-	 * @return Stack $this
+	 * @param array|Iterator $collection
+	 * @return $this
 	 */
 	public function pushAll($collection) {
 		foreach ($collection as $element) {

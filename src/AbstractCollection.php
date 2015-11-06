@@ -38,6 +38,9 @@ abstract class AbstractCollection implements Collection {
 	}
 	
 	/**
+	 * Applies the callback to the elements
+	 * 
+	 * @param callable $callback the applied callback function
 	 * @return static
 	 */
 	public function map(callable $callback) {
@@ -45,6 +48,9 @@ abstract class AbstractCollection implements Collection {
 	}
 	
 	/**
+	 * Filters elements using a callback function
+	 * 
+	 * @param callable $callback the filter function
 	 * @return static
 	 */
 	public function filter(callable $callback) {

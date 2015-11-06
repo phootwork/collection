@@ -1,6 +1,9 @@
 <?php
 namespace phootwork\collection;
 
+use \Iterator;
+use \InvalidArgumentException;
+
 /**
  * CollectionUtils help to transform data recursively into collections. 
  * 
@@ -13,21 +16,21 @@ class CollectionUtils {
 	 * Returns a proper collection for the given array (also transforms nested collections) 
 	 * (experimental API)
 	 * 
-	 * @param array|Collection $array
+	 * @param array|Iterator $collection
 	 * @return Map|ArrayList the collection
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
-	public static function fromCollection($array) {
-		if (!self::isCollection($array)) {
-			throw new \InvalidArgumentException('$array is not an array or collection');
+	public static function fromCollection($collection) {
+		if (!(is_array($collection) || $collection instanceof Iterator)) {
+			throw new InvalidArgumentException('$collection is neither an array nor an iterator');
 		}
-		
-		return self::toCollection($array);
+
+		return self::toCollection($collection);
 	}
 	
 	/**
 	 * @deprecated use fromCollection instead (will be removed in version 1.3)
-	 * @param array $array
+	 * @param Iterator $array
 	 * @return Map|ArrayList the collection
 	 */
 	public static function fromArray($array) {
@@ -35,29 +38,35 @@ class CollectionUtils {
 	}
 	
 	private static function toCollection($data) {
-		if (!($data instanceof Collection)) {
+		// prepare normal array
+		if (!($data instanceof Iterator)) {
 			$data = json_decode(json_encode($data));
 		}
 
-		if (is_array($data) || $data instanceof ArrayList) {
+		// check if we can transform it into a collection or just return as is
+		if (!(is_array($data) || $data instanceof Iterator || $data instanceof \stdClass)) {
+			return $data;
+		}
+
+		// check we have a list
+		if (is_array($data) || $data instanceof AbstractList) {
 			return self::toList($data);
-		} else if (is_object($data) || $data instanceof Map) {
-			return self::toMap($data);
 		}
 		
-		return $data;
+		// everything else must be a map
+		return self::toMap($data);
 	}
 	
 	/**
 	 * Recursively transforms data into a map (on the first level, deeper levels 
 	 * transformed to an appropriate collection) (experimental API)
 	 * 
-	 * @param array $data
+	 * @param array|Iterator $collection
 	 * @return Map
 	 */
-	public static function toMap($data) {
+	public static function toMap($collection) {
 		$map = new Map();
-		foreach ($data as $k => $v) {
+		foreach ($collection as $k => $v) {
 			$map->set($k, self::toCollection($v));
 		}
 		
@@ -68,18 +77,15 @@ class CollectionUtils {
 	 * Recursively transforms data into a list (on the first level, deeper levels 
 	 * transformed to an appropriate collection) (experimental API)
 	 *
-	 * @param array $data
+	 * @param array|Iterator $collection
 	 * @return ArrayList
 	 */
-	public static function toList($data) {
+	public static function toList($collection) {
 		$list = new ArrayList();
-		foreach ($data as $v) {
+		foreach ($collection as $v) {
 			$list->add(self::toCollection($v));
 		}
 		return $list;
 	}
-	
-	private static function isCollection($value) {
-		return is_object($value) || is_array($value) || $value instanceof Collection;
-	}
+
 }

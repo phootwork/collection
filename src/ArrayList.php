@@ -1,6 +1,8 @@
 <?php
 namespace phootwork\collection;
 
+use \Iterator;
+
 /**
  * Represents a List
  * 
@@ -11,7 +13,7 @@ class ArrayList extends AbstractList {
 	/**
 	 * Creates a new ArrayList
 	 * 
-	 * @param array|Collection $collection
+	 * @param array|Iterator $collection
 	 */
 	public function __construct($collection = []) {
 		$this->addAll($collection);
@@ -22,7 +24,7 @@ class ArrayList extends AbstractList {
 	 * 
 	 * @param mixed $element
 	 * @param int $index
-	 * @return ArrayList $this
+	 * @return $this
 	 */
 	public function add($element, $index = null) {
 		if ($index === null) {
@@ -37,12 +39,15 @@ class ArrayList extends AbstractList {
 	/**
 	 * Adds all elements to the list
 	 * 
-	 * @param array|Collection $collection
+	 * @param array|Iterator $collection
+	 * @return $this
 	 */
 	public function addAll($collection) {
 		foreach ($collection as $element) {
 			$this->add($element);
 		}
+		
+		return $this;
 	}
 	
 	/**
@@ -71,7 +76,7 @@ class ArrayList extends AbstractList {
 	 * Removes an element from the list
 	 * 
 	 * @param mixed $element
-	 * @return ArrayList $this
+	 * @return $this
 	 */
 	public function remove($element) {
 		$index = array_search($element, $this->collection, true);
@@ -85,12 +90,15 @@ class ArrayList extends AbstractList {
 	/**
 	 * Removes all elements from the list
 	 *
-	 * @param array|Collection $collection
+	 * @param array|Iterator $collection
+	 * @return $this;
 	 */
 	public function removeAll($collection) {
 		foreach ($collection as $element) {
 			$this->remove($element);
 		}
+		
+		return $this;
 	}
 
 }
