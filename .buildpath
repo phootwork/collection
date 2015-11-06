@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
-	<buildpathentry kind="src" path="vendor/sebastian/exporter/src"/>
 	<buildpathentry kind="src" path="vendor/symfony/yaml"/>
+	<buildpathentry kind="src" path="vendor/sebastian/exporter/src"/>
 	<buildpathentry kind="src" path="vendor/phpunit/php-text-template/src"/>
+	<buildpathentry kind="src" path="vendor/twig/twig/lib"/>
+	<buildpathentry kind="src" path="vendor/pimple/pimple/src"/>
+	<buildpathentry kind="src" path="vendor/symfony/process"/>
+	<buildpathentry kind="src" path="vendor/sebastian/recursion-context/src"/>
+	<buildpathentry kind="src" path="vendor/symfony/filesystem"/>
 	<buildpathentry kind="src" path="tests"/>
 	<buildpathentry kind="src" path="vendor/phootwork/lang/src"/>
 	<buildpathentry kind="src" path="vendor/phpunit/php-code-coverage/src"/>
-	<buildpathentry kind="src" path="vendor/sebastian/recursion-context/src"/>
-	<buildpathentry kind="src" path="vendor/phpunit/php-file-iterator/src"/>
 	<buildpathentry kind="src" path="vendor/phpunit/phpunit/src"/>
+	<buildpathentry kind="src" path="vendor/phpunit/php-file-iterator/src"/>
+	<buildpathentry kind="src" path="vendor/michelf/php-markdown"/>
 	<buildpathentry kind="src" path="vendor/sebastian/diff/src"/>
-	<buildpathentry kind="src" path="vendor/phpspec/prophecy/src"/>
-	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
 	<buildpathentry kind="src" path="vendor/doctrine/instantiator/src/Doctrine/Instantiator"/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry kind="src" path="vendor/phpspec/prophecy/src"/>
 	<buildpathentry kind="src" path="vendor/phpdocumentor/reflection-docblock/src"/>
 	<buildpathentry kind="src" path="vendor/sebastian/global-state/src"/>
+	<buildpathentry kind="src" path="vendor/symfony/finder"/>
 	<buildpathentry kind="src" path="vendor/phpunit/php-timer/src"/>
+	<buildpathentry kind="src" path="vendor/symfony/console"/>
+	<buildpathentry kind="src" path="vendor/sebastian/version/src"/>
 	<buildpathentry kind="src" path="vendor/phpunit/php-token-stream/src"/>
 	<buildpathentry kind="src" path="vendor/sebastian/environment/src"/>
-	<buildpathentry kind="src" path="vendor/sebastian/version/src"/>
+	<buildpathentry kind="src" path="vendor/sami/sami/Sami"/>
 	<buildpathentry kind="src" path="src"/>
 	<buildpathentry kind="src" path="vendor/composer"/>
-	<buildpathentry kind="src" path="vendor/phpunit/phpunit-mock-objects/src"/>
+	<buildpathentry kind="src" path="vendor/nikic/php-parser/lib"/>
 	<buildpathentry kind="src" path="vendor/sebastian/comparator/src"/>
+	<buildpathentry kind="src" path="vendor/phpunit/phpunit-mock-objects/src"/>
 </buildpath>

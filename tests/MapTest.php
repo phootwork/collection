@@ -26,6 +26,8 @@ class MapTest extends \PHPUnit_Framework_TestCase {
 		
 		$this->assertEquals(1, $map->size());
 		$this->assertEquals($item1, $map->get($key1));
+		$this->assertEquals($key1, $map->getKey($item1));
+		$this->assertNull($map->getKey($item2));
 		$this->assertTrue($map->has($key1));
 		$this->assertFalse($map->has($key2));
 		

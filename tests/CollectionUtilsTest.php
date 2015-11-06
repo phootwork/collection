@@ -46,7 +46,7 @@ class CollectionUtilsTest extends \PHPUnit_Framework_TestCase {
 		$list = new ArrayList([1, 2, 3]);
 		$coll = CollectionUtils::fromCollection($list);
 		
-		$this->assertSame($list, $coll);
+		$this->assertEquals($list, $coll);
 	}
 	
 	/**
@@ -54,5 +54,31 @@ class CollectionUtilsTest extends \PHPUnit_Framework_TestCase {
      */
 	public function testInvalidArgument() {
 		CollectionUtils::fromCollection(1);
+	}
+	
+	public function testToMap() {
+		$data = [['a' => 'b'], ['c' => 'd'], [1, 2, 3]];
+		$map = CollectionUtils::toMap($data);
+		
+		$this->assertTrue($map instanceof Map);
+		$this->assertTrue($map->get(0) instanceof Map);
+		$this->assertTrue($map->get(2) instanceof ArrayList);
+		
+		$map = new Map($data);
+		$this->assertFalse($map->get(0) instanceof Map);
+		$this->assertFalse($map->get(2) instanceof ArrayList);
+	}
+	
+	public function testToList() {
+		$data = ['a' => 'b', 'c' => [1, ['x' => 'y'], 4], 'd' => ['x' => 'y', 'z' => 'zz']];
+		$list = CollectionUtils::toList($data);
+		
+		$this->assertTrue($list instanceof ArrayList);
+		$this->assertEquals('b', $list->get(0));
+		$this->assertTrue($list->get(2) instanceof Map);
+		
+		$list = new ArrayList($data);
+		$this->assertEquals('b', $list->get(0));
+		$this->assertFalse($list->get(2) instanceof Map);
 	}
 }

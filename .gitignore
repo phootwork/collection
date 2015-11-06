@@ -1,4 +1,6 @@
 composer.phar
 vendor/
 coverage/
+cache/
+api/
 

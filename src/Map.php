@@ -46,6 +46,21 @@ class Map extends AbstractCollection implements \ArrayAccess {
 			return $default;
 		}
 	}
+	
+	/**
+	 * Returns the key for the given value
+	 * 
+	 * @param mixed $value the value
+	 * @return mixed
+	 */
+	public function getKey($value) {
+		$flipped = array_flip($this->collection);
+		if (isset($flipped[$value])) {
+			return $flipped[$value];
+		}
+		
+		return null;
+	}
 
 	/**
 	 * Sets many elements on that map

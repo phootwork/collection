@@ -18,7 +18,6 @@ Install via Composer:
 }
 ```
 
-
 ## Usage
 
 
@@ -73,3 +72,7 @@ $found = $list->search(4, function ($elem, $query) { // $query has the value 4 a
 ## Contributing
 
 Feel free to fork and submit a pull request (don't forget the tests) and I am happy to merge.
+
+## Changelog
+
+Refer to [Releases](https://github.com/phootwork/collection/releases)
