@@ -91,7 +91,7 @@ class ArrayList extends AbstractList {
 	 * Removes all elements from the list
 	 *
 	 * @param array|Iterator $collection
-	 * @return $this;
+	 * @return $this
 	 */
 	public function removeAll($collection) {
 		foreach ($collection as $element) {
