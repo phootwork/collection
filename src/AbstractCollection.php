@@ -60,17 +60,130 @@ abstract class AbstractCollection implements Collection {
 	/**
 	 * Searches the collection for query using the callback function on each element
 	 * 
-	 * @param string $query
+	 * The callback function takes one or two parameters:
+	 * 
+	 *     function ($element [, $query]) {}
+	 * 
+	 * The callback must return a boolean
+	 * 
+	 * @param mixed $query (optional)
 	 * @param callable $callback
 	 * @return boolean
 	 */
-	public function search($query, callable $callback) {
+	public function search() {
+		if (func_num_args() == 1) {
+			$callback = func_get_arg(0);
+		} else {
+			$query = func_get_arg(0);
+			$callback = func_get_arg(1);
+		}
+
 		foreach ($this->collection as $element) {
-			if ($callback($element, $query)) {
+			$return = func_num_args() == 1 ? $callback($element) : $callback($element, $query);
+
+			if ($return) {
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Searches the collection with a given callback and returns the first element if found.
+	 * 
+	 * The callback function takes one or two parameters:
+	 * 
+	 *     function ($element [, $query]) {}
+	 * 
+	 * The callback must return a boolean
+	 * 
+	 * @param mixed $query OPTIONAL the provided query
+	 * @param callable $callback the callback function
+	 * @return mixed|null the found element or null if it hasn't been found
+	 */
+	public function find() {
+		if (func_num_args() == 1) {
+			$callback = func_get_arg(0);
+		} else {
+			$query = func_get_arg(0);
+			$callback = func_get_arg(1);
+		}
+		
+		foreach ($this->collection as $element) {
+			$return = func_num_args() == 1 ? $callback($element) : $callback($element, $query);
+			
+			if ($return) {
+				return $element;
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Searches the collection with a given callback and returns the last element if found.
+	 *
+	 * The callback function takes one or two parameters:
+	 *
+	 *     function ($element [, $query]) {}
+	 *
+	 * The callback must return a boolean
+	 *
+	 * @param mixed $query OPTIONAL the provided query
+	 * @param callable $callback the callback function
+	 * @return mixed|null the found element or null if it hasn't been found
+	 */
+	public function findLast() {
+		if (func_num_args() == 1) {
+			$callback = func_get_arg(0);
+		} else {
+			$query = func_get_arg(0);
+			$callback = func_get_arg(1);
+		}
+		
+		$reverse = array_reverse($this->collection, true);
+		foreach ($reverse as $element) {
+			$return = func_num_args() == 1 ? $callback($element) : $callback($element, $query);
+			
+			if ($return) {
+				return $element;
+			}
+		}
+
+		return null;
+	}
+	
+	/**
+	 * Searches the collection with a given callback and returns all matching elements.
+	 *
+	 * The callback function takes one or two parameters:
+	 *
+	 *     function ($element [, $query]) {}
+	 *
+	 * The callback must return a boolean
+	 *
+	 * @param mixed $query OPTIONAL the provided query
+	 * @param callable $callback the callback function
+	 * @return mixed|null the found element or null if it hasn't been found
+	 */
+	public function findAll() {
+		if (func_num_args() == 1) {
+			$callback = func_get_arg(0);
+		} else {
+			$query = func_get_arg(0);
+			$callback = func_get_arg(1);
+		}
+
+		$collection = [];
+		foreach ($this->collection as $k => $element) {
+			$return = func_num_args() == 1 ? $callback($element) : $callback($element, $query);
+				
+			if ($return) {
+				$collection[$k] = $element;
+			}
+		}
+		
+		return new static($collection);
 	}
 	
 	/**

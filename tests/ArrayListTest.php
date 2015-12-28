@@ -126,6 +126,13 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase {
 		
 		$this->assertTrue($list->search(4, $search));
 		$this->assertFalse($list->search(20, $search));
+		
+		$this->assertTrue($list->search(function ($elem) {
+			return $elem == 4;
+		}));
+		$this->assertFalse($list->search(function ($elem) {
+			return $elem == 20;
+		}));
 	}
 
 	public function testSortAndReverse() {
@@ -165,4 +172,47 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($list->toArray(), $result);
 	}
 	
+	public function testFind() {
+		$list = new ArrayList(range(1, 10));
+		$list = $list->map(function ($item) {
+			return new Item($item);
+		});
+		
+		$search = function ($i, $query) {
+			return $i->getContent() == $query;
+		};
+		
+		$item = $list->find(4, $search);
+		$this->assertTrue($item instanceof Item);
+		$this->assertEquals(4, $item->getContent());
+		$this->assertEquals(3, $list->findIndex(4, $search));
+		$this->assertNull($list->find(20, $search));
+		
+		$fruits = new ArrayList(['apple', 'banana', 'pine', 'banana', 'ananas']);
+		$fruits = $fruits->map(function ($item) {
+			return new Item($item);
+		});
+		$this->assertEquals(1, $fruits->findIndex(function ($elem) {
+			return $elem->getContent() == 'banana';
+		}));
+		$this->assertEquals(3, $fruits->findLastIndex(function ($elem) {
+			return $elem->getContent() == 'banana';
+		}));
+		$this->assertEquals(3, $fruits->findLastIndex('banana', function ($elem, $query) {
+			return $elem->getContent() == $query;
+		}));
+		$this->assertNull($fruits->findLast('mango', function ($elem, $query) {
+			return $elem->getContent() == $query;
+		}));
+		
+		$apples = $fruits->findAll('apple', function ($elem, $query) {
+			return $elem->getContent() == $query;
+		});
+		$this->assertEquals(1, $apples->size());
+		
+		$bananas = $fruits->findAll(function ($elem) {
+			return $elem->getContent() == 'banana';
+		});
+		$this->assertEquals(2, $bananas->size());
+	}
 }

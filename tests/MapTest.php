@@ -1,9 +1,9 @@
 <?php
 namespace phootwork\collection\tests;
 
+use phootwork\collection\ArrayList;
 use phootwork\collection\Map;
 use phootwork\collection\Set;
-use phootwork\collection\ArrayList;
 use phootwork\collection\tests\fixtures\Item;
 use phootwork\lang\ComparableComparator;
 use phootwork\lang\StringComparator;
@@ -171,6 +171,31 @@ class MapTest extends \PHPUnit_Framework_TestCase {
 			$result[$key] = $value;
 		});
 		$this->assertEquals($map->toArray(), $result);
+	}
+	
+	public function testFind() {
+		$fruits = new Map([
+			'a' => 'apple', 
+			'b' => 'banana', 
+			'c' => 'pine', 
+			'd' => 'banana', 
+			'e' => 'ananas'
+		]);
+		$fruits = $fruits->map(function ($item) {
+			return new Item($item);
+		});
+		$this->assertEquals('b', $fruits->findKey(function ($elem) {
+			return $elem->getContent() == 'banana';
+		}));
+		$this->assertEquals('b', $fruits->findKey('banana', function ($elem, $query) {
+			return $elem->getContent() == $query;
+		}));
+		$this->assertEquals('d', $fruits->findLastKey(function ($elem) {
+			return $elem->getContent() == 'banana';
+		}));
+		$this->assertEquals('d', $fruits->findLastKey('banana', function ($elem, $query) {
+			return $elem->getContent() == $query;
+		}));
 	}
 	
 }

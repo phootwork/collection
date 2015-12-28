@@ -55,9 +55,10 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return mixed
 	 */
 	public function getKey($value) {
-		$flipped = array_flip($this->collection);
-		if (isset($flipped[$value])) {
-			return $flipped[$value];
+		foreach ($this->collection as $k => $v) {
+			if ($v === $value) {
+				return $k;
+			}
 		}
 		
 		return null;
@@ -154,6 +155,64 @@ class Map extends AbstractCollection implements \ArrayAccess {
 		foreach ($this->collection as $key => $value) {
 			$callback($key, $value);
 		}
+	}
+	
+	/**
+	 * Searches the collection with a given callback and returns the key for the first element if found.
+	 *
+	 * The callback function takes one or two parameters:
+	 *
+	 *     function ($element [, $query]) {}
+	 *
+	 * The callback must return a boolean
+	 *
+	 * @param mixed $query OPTIONAL the provided query
+	 * @param callable $callback the callback function
+	 * @return mixed|null the key or null if it hasn't been found
+	 */
+	public function findKey() {
+		if (func_num_args() == 1) {
+			$callback = func_get_arg(0);
+		} else {
+			$query = func_get_arg(0);
+			$callback = func_get_arg(1);
+		}
+		
+		$index = func_num_args() == 1 ? $this->find($callback) : $this->find($query, $callback);
+		if ($index !== null) {
+			$index = $this->getKey($index);
+		}
+	
+		return $index;
+	}
+	
+	/**
+	 * Searches the collection with a given callback and returns the key for the last element if found.
+	 *
+	 * The callback function takes one or two parameters:
+	 *
+	 *     function ($element [, $query]) {}
+	 *
+	 * The callback must return a boolean
+	 *
+	 * @param mixed $query OPTIONAL the provided query
+	 * @param callable $callback the callback function
+	 * @return mixed|null the key or null if it hasn't been found
+	 */
+	public function findLastKey() {
+		if (func_num_args() == 1) {
+			$callback = func_get_arg(0);
+		} else {
+			$query = func_get_arg(0);
+			$callback = func_get_arg(1);
+		}
+
+		$index = func_num_args() == 1 ? $this->findLast($callback) : $this->findLast($query, $callback);
+		if ($index !== null) {
+			$index = $this->getKey($index);
+		}
+	
+		return $index;
 	}
 
 	/**
