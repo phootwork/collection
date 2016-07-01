@@ -28,15 +28,6 @@ class CollectionUtils {
 		return self::toCollection($collection);
 	}
 
-	/**
-	 * @deprecated use fromCollection instead (will be removed in version 1.3)
-	 * @param Iterator $array
-	 * @return Map|ArrayList the collection
-	 */
-	public static function fromArray($array) {
-		return self::fromCollection($array);
-	}
-
 	private static function toCollection($data) {
 		// prepare normal array
 		if (!($data instanceof Iterator)) {
