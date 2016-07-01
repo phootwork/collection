@@ -5,17 +5,17 @@ use \Iterator;
 use \InvalidArgumentException;
 
 /**
- * CollectionUtils help to transform data recursively into collections. 
- * 
- * It must be mentioned the API is experimental and may change. Please 
+ * CollectionUtils help to transform data recursively into collections.
+ *
+ * It must be mentioned the API is experimental and may change. Please
  * report to the issue tracker.
  */
 class CollectionUtils {
-	
+
 	/**
-	 * Returns a proper collection for the given array (also transforms nested collections) 
+	 * Returns a proper collection for the given array (also transforms nested collections)
 	 * (experimental API)
-	 * 
+	 *
 	 * @param array|Iterator $collection
 	 * @return Map|ArrayList the collection
 	 * @throws InvalidArgumentException
@@ -27,7 +27,7 @@ class CollectionUtils {
 
 		return self::toCollection($collection);
 	}
-	
+
 	/**
 	 * @deprecated use fromCollection instead (will be removed in version 1.3)
 	 * @param Iterator $array
@@ -36,7 +36,7 @@ class CollectionUtils {
 	public static function fromArray($array) {
 		return self::fromCollection($array);
 	}
-	
+
 	private static function toCollection($data) {
 		// prepare normal array
 		if (!($data instanceof Iterator)) {
@@ -52,15 +52,15 @@ class CollectionUtils {
 		if (is_array($data) || $data instanceof AbstractList) {
 			return self::toList($data);
 		}
-		
+
 		// everything else must be a map
 		return self::toMap($data);
 	}
-	
+
 	/**
-	 * Recursively transforms data into a map (on the first level, deeper levels 
+	 * Recursively transforms data into a map (on the first level, deeper levels
 	 * transformed to an appropriate collection) (experimental API)
-	 * 
+	 *
 	 * @param array|Iterator $collection
 	 * @return Map
 	 */
@@ -69,12 +69,12 @@ class CollectionUtils {
 		foreach ($collection as $k => $v) {
 			$map->set($k, self::toCollection($v));
 		}
-		
+
 		return $map;
 	}
-	
+
 	/**
-	 * Recursively transforms data into a list (on the first level, deeper levels 
+	 * Recursively transforms data into a list (on the first level, deeper levels
 	 * transformed to an appropriate collection) (experimental API)
 	 *
 	 * @param array|Iterator $collection
@@ -86,6 +86,26 @@ class CollectionUtils {
 			$list->add(self::toCollection($v));
 		}
 		return $list;
+	}
+
+	/**
+	 * Recursively exports a collection to an array
+	 *
+	 * @param mixed $collection
+	 * @return array
+	 */
+	public static function toArrayRecursive($collection) {
+		$arr = $collection;
+		if (is_object($collection) && method_exists($collection, 'toArray')) {
+			$arr = $collection->toArray();
+		}
+
+		return array_map(function ($v) {
+			if (is_object($v) && method_exists($v, 'toArray')) {
+				return static::toArrayRecursive($v);
+			}
+			return $v;
+		}, $arr);
 	}
 
 }
