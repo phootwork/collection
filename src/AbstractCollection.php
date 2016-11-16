@@ -30,12 +30,6 @@ abstract class AbstractCollection implements Collection {
 
 	public function toArray() {
 		return $this->collection;
-// 		return array_map(function ($v) {
-// 			if (is_object($v) && method_exists($v, 'toArray')) {
-// 				return $v->toArray();
-// 			}
-// 			return $v;
-// 		}, $this->collection);
 	}
 
 	/**
@@ -191,7 +185,7 @@ abstract class AbstractCollection implements Collection {
 	 * Internal sort function
 	 *
 	 * @param array $collection the collection on which is operated on
-	 * @param Comparator|callable $cmp the compare function
+	 * @param Comparator|callable|null $cmp the compare function
 	 * @param callable $usort the sort function for user passed $cmd
 	 * @param callable $sort the default sort function
 	 */

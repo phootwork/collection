@@ -22,6 +22,18 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	}
 	
 	/**
+	 * @param string|Text $key
+	 * @return string
+	 */
+	private function extractKey($key) {
+		if ($key instanceof Text) {
+			return $key->toString();
+		}
+		
+		return $key;
+	}
+	
+	/**
 	 * Sets an element with the given key on that map
 	 * 
 	 * @param string key
@@ -29,9 +41,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return Map $this
 	 */
 	public function set($key, $element) {
-		if ($key instanceof Text) {
-			$key = $key->toString();
-		}
+		$key = $this->extractKey($key);
 		$this->collection[$key] = $element;
 		
 		return $this;
@@ -45,9 +55,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return mixed
 	 */
 	public function get($key, $default = null) {
-		if ($key instanceof Text) {
-			$key = $key->toString();
-		}
+		$key = $this->extractKey($key);
 		if (isset($this->collection[$key])) {
 			return $this->collection[$key];
 		} else {
@@ -93,9 +101,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return mixed the element at the given key
 	 */
 	public function remove($key) {
-		if ($key instanceof Text) {
-			$key = $key->toString();
-		}
+		$key = $this->extractKey($key);
 		if (isset($this->collection[$key])) {
 			$element = $this->collection[$key];
 			unset($this->collection[$key]);
@@ -129,9 +135,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return boolean
 	 */
 	public function has($key) {
-		if ($key instanceof Text) {
-			$key = $key->toString();
-		}
+		$key = $this->extractKey($key);
 		return isset($this->collection[$key]);
 	}
 	
