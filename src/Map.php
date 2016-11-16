@@ -3,6 +3,7 @@ namespace phootwork\collection;
 
 use \Iterator;
 use phootwork\lang\Comparator;
+use phootwork\lang\Text;
 
 /**
  * Represents a Map
@@ -28,6 +29,9 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return Map $this
 	 */
 	public function set($key, $element) {
+		if ($key instanceof Text) {
+			$key = $key->toString();
+		}
 		$this->collection[$key] = $element;
 		
 		return $this;
@@ -41,6 +45,9 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return mixed
 	 */
 	public function get($key, $default = null) {
+		if ($key instanceof Text) {
+			$key = $key->toString();
+		}
 		if (isset($this->collection[$key])) {
 			return $this->collection[$key];
 		} else {
@@ -86,6 +93,9 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return mixed the element at the given key
 	 */
 	public function remove($key) {
+		if ($key instanceof Text) {
+			$key = $key->toString();
+		}
 		if (isset($this->collection[$key])) {
 			$element = $this->collection[$key];
 			unset($this->collection[$key]);
@@ -119,6 +129,9 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return boolean
 	 */
 	public function has($key) {
+		if ($key instanceof Text) {
+			$key = $key->toString();
+		}
 		return isset($this->collection[$key]);
 	}
 	

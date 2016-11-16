@@ -7,6 +7,7 @@ use phootwork\collection\Set;
 use phootwork\collection\tests\fixtures\Item;
 use phootwork\lang\ComparableComparator;
 use phootwork\lang\StringComparator;
+use phootwork\lang\Text;
 
 class MapTest extends \PHPUnit_Framework_TestCase {
 
@@ -196,6 +197,16 @@ class MapTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('d', $fruits->findLastKey('banana', function ($elem, $query) {
 			return $elem->getContent() == $query;
 		}));
+	}
+	
+	public function testTextAsKey() {
+		$map = new Map();
+		$key = new Text('k');
+		$map->set($key, 'val');
+		$this->assertTrue($map->has($key));
+		$this->assertEquals('val', $map->get($key));
+		$map->remove($key);
+		$this->assertEquals(0, $map->size());
 	}
 	
 }
