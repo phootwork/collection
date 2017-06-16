@@ -29,13 +29,19 @@ class StackTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testToArray() {
-		$item1 = 'item 1';
-		$item2 = 'item 2';
-		$item3 = 'item 3';
-		$items = [$item1, $item2, $item3];
+		$stack = new Stack(['item 1', 'item 2', 'item 3']);
+		$this->assertSame('item 3', $stack->peek());
+		$this->assertEquals($stack->toArray(), ['item 1', 'item 2', 'item 3']);
 		
-		$stack = new Stack($items);
-		$this->assertSame(array_reverse($items), $stack->toArray());
+		$stack = new Stack();
+		$stack->push('item 1')->push('item 2')->push('item 3');
+		$this->assertSame('item 3', $stack->peek());
+		$this->assertEquals($stack->toArray(), ['item 1', 'item 2', 'item 3']);
+		
+		$stack = new Stack();
+		$stack->pushAll(['item 1', 'item 2', 'item 3']);
+		$this->assertSame('item 3', $stack->peek());
+		$this->assertEquals($stack->toArray(), ['item 1', 'item 2', 'item 3']);
 	}
 	
 	public function testDuplicateValues() {
@@ -54,7 +60,6 @@ class StackTest extends \PHPUnit_Framework_TestCase {
 		$items = [$item1, $item2, $item3];
 		
 		$stack = new Stack($items);
-		$this->assertSame($item3, $stack->peek());
 		
 		$pops = [];
 		$iters = [];
@@ -67,7 +72,7 @@ class StackTest extends \PHPUnit_Framework_TestCase {
 			$pops[] = $item;
 		}
 		
-		$this->assertSame($iters, $pops);
+		$this->assertSame($iters, array_reverse($pops));
 		
 		$stack->clear();
 		$this->assertNull($stack->peek());
@@ -93,6 +98,15 @@ class StackTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($stack, $clone);
 		$this->assertEquals($stack->toArray(), $clone->toArray());
 		$this->assertNotSame($stack, $clone);
+	}
+	
+	public function testMap() {
+		$cb = function ($item) {
+			return strtoupper($item);
+		};
+		
+		$stack = new Stack(['item 1', 'item 2', 'item 3']);
+		$this->assertEquals(array_map($cb, $stack->toArray()), $stack->map($cb)->toArray());
 	}
 	
 }

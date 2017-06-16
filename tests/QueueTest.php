@@ -29,13 +29,14 @@ class QueueTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testToArray() {
-		$item1 = 'item 1';
-		$item2 = 'item 2';
-		$item3 = 'item 3';
-		$items = [$item1, $item2, $item3];
-	
-		$queue = new Queue($items);
-		$this->assertSame($items, $queue->toArray());
+		$queue = new Queue(['item 1', 'item 2', 'item 3']);
+		$this->assertSame('item 1', $queue->peek());
+		$this->assertEquals($queue->toArray(), ['item 1', 'item 2', 'item 3']);
+		
+		$queue = new Queue();
+		$queue->enqueue('item 1')->enqueue('item 2')->enqueue('item 3');
+		$this->assertSame('item 3', $queue->peek());
+		$this->assertEquals($queue->toArray(), ['item 3', 'item 2', 'item 1']);
 	}
 	
 	public function testDuplicateValues() {
@@ -46,7 +47,7 @@ class QueueTest extends \PHPUnit_Framework_TestCase {
 		
 		$this->assertEquals(3, $queue->size());
 	}
-	
+
 	public function testOrder() {
 		$item1 = 'item 1';
 		$item2 = 'item 2';
@@ -54,7 +55,6 @@ class QueueTest extends \PHPUnit_Framework_TestCase {
 		$items = [$item1, $item2, $item3];
 		
 		$queue = new Queue($items);
-		$this->assertSame($item1, $queue->peek());
 		$polls = [];
 		$iters = [];
 		
@@ -66,7 +66,7 @@ class QueueTest extends \PHPUnit_Framework_TestCase {
 			$polls[] = $item;
 		}
 		
-		$this->assertSame($iters, $polls);
+		$this->assertEquals($iters, $polls);
 		
 		$queue->clear();
 		$this->assertNull($queue->peek());
@@ -92,6 +92,15 @@ class QueueTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($queue, $clone);
 		$this->assertEquals($queue->toArray(), $clone->toArray());
 		$this->assertNotSame($queue, $clone);
+	}
+	
+	public function testMap() {
+		$cb = function ($item) {
+			return strtoupper($item);
+		};
+		
+		$queue = new Queue(['item 1', 'item 2', 'item 3']);
+		$this->assertEquals(array_map($cb, $queue->toArray()), $queue->map($cb)->toArray());
 	}
 	
 }
