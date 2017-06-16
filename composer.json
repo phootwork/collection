@@ -27,7 +27,7 @@
 		"phootwork/lang" : "~0"
 	},
 	"require-dev" : {
-		"phpunit/phpunit" : "~4",
+		"phpunit/phpunit" : "^5.7|~4",
 		"sami/sami" : "~3"
 	}
 }

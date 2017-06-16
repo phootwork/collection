@@ -28,7 +28,7 @@ class Stack extends AbstractList {
 	 * @return $this
 	 */
 	public function push($element) {
-		array_unshift($this->collection, $element);
+		array_push($this->collection, $element);
 		
 		return $this;
 	}
@@ -54,7 +54,7 @@ class Stack extends AbstractList {
 	 */
 	public function peek() {
 		if ($this->size() > 0) {
-			return $this->collection[0];
+			return $this->collection[$this->size() - 1];
 		}
 
 		return null;
@@ -66,7 +66,7 @@ class Stack extends AbstractList {
 	 * @return mixed
 	 */
 	public function pop() {
-		return array_shift($this->collection);
+		return array_pop($this->collection);
 	}
 
 }
