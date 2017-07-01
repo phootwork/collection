@@ -2,6 +2,11 @@
 	"name" : "phootwork/collection",
 	"type" : "library",
 	"description" : "PHP Collections library (List, Set, Map, Queue & Stack)",
+	"authors" : [{
+			"name" : "Thomas Gossmann",
+			"homepage" : "http://gos.si"
+		}
+	],
 	"license" : "MIT",
 	"keywords" : [
 		"collection",
