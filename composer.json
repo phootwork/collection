@@ -12,6 +12,9 @@
 		"queue",
 		"stack"
 	],
+	"support" : {
+		"issues" : "https://github.com/phootwork/collection"
+	},
 	"autoload" : {
 		"psr-4" : {
 			"phootwork\\collection\\" : "src"
@@ -31,6 +34,7 @@
 		"sami/sami" : "^4|^3"
 	},
 	"scripts" : {
-		"test" : "phpunit"
+		"test" : "phpunit",
+		"api" : "sami.php update sami.php"
 	}
 }
