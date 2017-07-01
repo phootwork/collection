@@ -1,12 +1,11 @@
 # PHP Collections library
 
-[![License](https://poser.pugx.org/phootwork/collection/license)](https://packagist.org/packages/phootwork/collection)
-[![Latest Stable Version](https://poser.pugx.org/phootwork/collection/v/stable)](https://packagist.org/packages/phootwork/collection)
-[![Total Downloads](https://poser.pugx.org/phootwork/collection/downloads)](https://packagist.org/packages/phootwork/collection)<br>
-[![HHVM Status](http://hhvm.h4cc.de/badge/phootwork/collection.svg?style=flat)](http://hhvm.h4cc.de/package/phootwork/collection)
-[![Build Status](https://travis-ci.org/phootwork/collection.svg?branch=master)](https://travis-ci.org/phootwork/collection)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/phootwork/collection/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phootwork/collection/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/phootwork/collection/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/phootwork/collection/?branch=master)
+[![License](https://img.shields.io/github/license/phootwork/collection.svg?style=flat-square)](https://packagist.org/packages/phootwork/collection)
+[![Latest Stable Version](https://img.shields.io/packagist/v/phootwork/collection.svg?style=flat-square)](https://packagist.org/packages/phootwork/collection)
+[![Total Downloads](https://img.shields.io/packagist/dt/phootwork/collection.svg?style=flat-square&colorB=007ec6)](https://packagist.org/packages/phootwork/collection)<br>
+[![Build Status](https://img.shields.io/scrutinizer/build/g/phootwork/collection.svg?style=flat-square)](https://travis-ci.org/phootwork/collection)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/phootwork/collection.svg?style=flat-square)](https://scrutinizer-ci.com/g/phootwork/collection)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/phootwork/collection.svg?style=flat-square)](https://scrutinizer-ci.com/g/phootwork/collection)
 
 PHP Collections library which contains ArrayList, Set, Map, Queue & Stack.
 
