@@ -13,7 +13,7 @@
 		"stack"
 	],
 	"support" : {
-		"issues" : "https://github.com/phootwork/collection"
+		"issues" : "https://github.com/phootwork/collection/issues"
 	},
 	"autoload" : {
 		"psr-4" : {
