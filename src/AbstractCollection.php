@@ -53,6 +53,40 @@ abstract class AbstractCollection implements Collection {
 	}
 
 	/**
+	 * Tests whether all elements in the collection pass the test implemented by the provided function.
+	 *
+	 * Returns <code>true</code> for an empty collection.
+	 *
+	 * @param callable $callback
+	 * @return boolean
+	 */
+	public function every(callable $callback) {
+		$match = true;
+		foreach ($this->collection as $element) {
+			$match = $match && $callback($element);
+		}
+
+		return $match;
+	}
+
+	/**
+	 * Tests whether at least one element in the collection passes the test implemented by the provided function.
+	 *
+	 * Returns <code>false</code> for an empty collection.
+	 *
+	 * @param callable $callback
+	 * @return boolean
+	 */
+	public function some(callable $callback) {
+		$match = false;
+		foreach ($this->collection as $element) {
+			$match = $match || $callback($element);
+		}
+
+		return $match;
+	}
+
+	/**
 	 * Searches the collection for query using the callback function on each element
 	 *
 	 * The callback function takes one or two parameters:
