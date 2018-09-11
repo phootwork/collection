@@ -26,7 +26,7 @@ class Set extends AbstractList {
 	 * @return $this
 	 */
 	public function add($element) {
-		if (!in_array($element, $this->collection)) {
+		if (!in_array($element, $this->collection, true)) {
 			$this->collection[$this->size()] = $element;
 		}
 
