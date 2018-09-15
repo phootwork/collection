@@ -2,6 +2,7 @@
 namespace phootwork\collection\tests;
 
 use phootwork\collection\Set;
+use phootwork\collection\tests\fixtures\Item;
 
 class SetTest extends \PHPUnit_Framework_TestCase {
 	
@@ -82,5 +83,22 @@ class SetTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($set->toArray(), $clone->toArray());
 		$this->assertNotSame($set, $clone);
 	}
-	
+
+    /**
+     * Test item recursion issues.
+     */
+	public function testAddRecursion()
+    {
+        $item1 = new Item();
+        $item2 = new Item($item1);
+        $item1->setContent($item2);
+
+        $set = new Set();
+        $set
+            ->add($item1)
+            ->add($item2);
+        ;
+
+        $this->assertEquals(2, $set->size());
+    }
 }
