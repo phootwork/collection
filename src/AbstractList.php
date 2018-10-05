@@ -124,4 +124,27 @@ abstract class AbstractList extends AbstractCollection {
 	
 		return $index;
 	}
+
+    /**
+     * Returns the element at the given index (or nothing if the index isn't present)
+     *
+     * @param int $index
+     * @return mixed
+     */
+    public function get($index) {
+        if (isset($this->collection[$index])) {
+            return $this->collection[$index];
+        }
+    }
+
+    /**
+     * Returns the index of the given element or FALSE if the element can't be found
+     *
+     * @param mixed $element
+     * @return int the index for the given element
+     */
+    public function indexOf($element) {
+        return array_search($element, $this->collection, true);
+    }
+
 }
