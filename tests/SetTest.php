@@ -100,4 +100,22 @@ class SetTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(2, $set->size());
     }
+
+    public function testIndexOf() {
+        $item1 = 'item 1';
+        $item2 = 'item 2';
+        $item3 = 'item 3';
+        $items = [$item1, $item2, $item3];
+
+        $set = new Set($items);
+
+        $this->assertEquals(0, $set->indexOf($item1));
+        $this->assertEquals(1, $set->indexOf($item2));
+        $this->assertEquals(2, $set->indexOf($item3));
+        $this->assertFalse($set->indexOf('item4'));
+
+        $this->assertEquals($item1, $set->get(0));
+        $this->assertEquals($item2, $set->get(1));
+        $this->assertEquals($item3, $set->get(2));
+    }
 }
