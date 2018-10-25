@@ -120,6 +120,22 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase {
 		$this->assertNotSame($list, $clone);
 	}
 
+	public function testCloneWithObjects() {
+        $obj1 = (object) ['id' => 1, 'name' => 'Joda'];
+        $obj2 = (object) ['id' => 2, 'name' => 'Obi Wan'];
+        $list = new ArrayList([$obj1, $obj2]);
+        $clone = clone $list;
+
+        $this->assertTrue($clone instanceof ArrayList);
+        $this->assertEquals($list, $clone);
+        $this->assertNotSame($list, $clone);
+
+        $this->assertEquals($list->get(0), $clone->get(0));
+        $this->assertNotSame($list->get(0), $clone->get(0));
+        $this->assertEquals($list->get(1), $clone->get(1));
+        $this->assertNotSame($list->get(1), $clone->get(1));
+    }
+
 	public function testSearch() {
 		$list = new ArrayList(range(1, 10));
 		$search = function ($elem, $query) {return $elem == $query;};

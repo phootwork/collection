@@ -208,5 +208,21 @@ class MapTest extends \PHPUnit_Framework_TestCase {
 		$map->remove($key);
 		$this->assertEquals(0, $map->size());
 	}
+
+    public function testCloneWithObjects() {
+        $obj1 = (object) ['id' => 1, 'name' => 'Joda'];
+        $obj2 = (object) ['id' => 2, 'name' => 'Obi Wan'];
+        $map = new Map(['obj1' => $obj1, 'obj2' => $obj2]);
+        $clone = clone $map;
+
+        $this->assertTrue($clone instanceof Map);
+        $this->assertEquals($map, $clone);
+        $this->assertNotSame($map, $clone);
+
+        $this->assertEquals($map->get('obj1'), $clone->get('obj1'));
+        $this->assertNotSame($map->get('obj1'), $clone->get('obj1'));
+        $this->assertEquals($map->get('obj2'), $clone->get('obj2'));
+        $this->assertNotSame($map->get('obj2'), $clone->get('obj2'));
+    }
 	
 }

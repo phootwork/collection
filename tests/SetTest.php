@@ -100,4 +100,23 @@ class SetTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(2, $set->size());
     }
+
+    public function testCloneWithObjects() {
+        $obj1 = (object) ['id' => 1, 'name' => 'Joda'];
+        $obj2 = (object) ['id' => 2, 'name' => 'Obi Wan'];
+        $set = new Set([$obj1, $obj2]);
+        $clone = clone $set;
+
+        $this->assertTrue($clone instanceof Set);
+        $this->assertEquals($set, $clone);
+        $this->assertNotSame($set, $clone);
+
+        foreach ($set as $item) {
+            $cloneItem = $clone->find($item, function ($element, $query) {
+                return $element == $query;
+            });
+            $this->assertNotNull($cloneItem);
+            $this->assertNotSame($item, $cloneItem);
+        }
+    }
 }

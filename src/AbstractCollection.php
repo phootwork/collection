@@ -274,7 +274,15 @@ abstract class AbstractCollection implements Collection {
 	 * @internal
 	 */
 	public function __clone() {
-		return new static($this->collection);
+		$clonedCollection = [];
+		foreach ($this->collection as $key => $element) {
+			if (is_object($element)) {
+				$clonedCollection[$key] = clone $element;
+				continue;
+			}
+			$clonedCollection[$key] = $element;
+		}
+		$this->collection = $clonedCollection;
 	}
 
 }
