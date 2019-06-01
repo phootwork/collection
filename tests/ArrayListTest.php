@@ -111,13 +111,17 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testClone() {
-		$list = new ArrayList([1, 2, 3, 4, 5, 6]);
+		$list = new ArrayList([new Item(), 2, 3, 4, 5, 6]);
 		$clone = clone $list;
 
 		$this->assertTrue($clone instanceof ArrayList);
 		$this->assertEquals($list, $clone);
 		$this->assertEquals($list->toArray(), $clone->toArray());
 		$this->assertNotSame($list, $clone);
+		$this->assertSame($list->get(0), $clone->get(0));
+		
+		$clone->remove(0);
+		$this->assertNotEquals($list->size(), $clone->size());
 	}
 
 	public function testSearch() {
