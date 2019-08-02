@@ -1,7 +1,3 @@
-.buildpath
 composer.phar
 composer.lock
 vendor/
-coverage/
-cache/
-api/
