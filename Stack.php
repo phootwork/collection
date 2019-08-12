@@ -1,4 +1,13 @@
-<?php
+<?php declare(strict_types=1);
+/**
+ * This file is part of the Phootwork package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license MIT License
+ * @copyright Thomas Gossmann
+ */
+
 namespace phootwork\collection;
 
 use \Iterator;
@@ -27,7 +36,7 @@ class Stack extends AbstractList {
 	 * @param mixed $element
 	 * @return $this
 	 */
-	public function push($element) {
+	public function push($element): self {
 		array_push($this->collection, $element);
 		
 		return $this;
@@ -39,7 +48,7 @@ class Stack extends AbstractList {
 	 * @param array|Iterator $collection
 	 * @return $this
 	 */
-	public function pushAll($collection) {
+	public function pushAll($collection): self {
 		foreach ($collection as $element) {
 			$this->push($element);
 		}
@@ -68,5 +77,4 @@ class Stack extends AbstractList {
 	public function pop() {
 		return array_pop($this->collection);
 	}
-
 }

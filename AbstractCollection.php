@@ -1,34 +1,78 @@
-<?php
+<?php declare(strict_types=1);
+/**
+ * This file is part of the Phootwork package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license MIT License
+ * @copyright Thomas Gossmann
+ */
+
 namespace phootwork\collection;
 
+use \Iterator;
 use phootwork\lang\Comparator;
 
 /**
- * AbstractCollection providing implemention for the Collection interface.
+ * AbstractCollection providing implementation for the Collection interface.
  *
  * @author Thomas Gossmann
  */
 abstract class AbstractCollection implements Collection {
 
+	/** @var array */
 	protected $collection = [];
 
-	public function contains($element) {
+	/**
+	 * AbstractCollection constructor.
+	 *
+	 * @param array|Iterator $collection
+	 */
+	abstract public function __construct($collection = []);
+
+	/**
+	 * Check if the collection contains the given element.
+	 *
+	 * @param mixed $element
+	 *
+	 * @return bool
+	 */
+	public function contains($element): bool {
 		return in_array($element, $this->collection, true);
 	}
 
-	public function size() {
+	/**
+	 * Return the size of the collection.
+	 *
+	 * @return int
+	 */
+	public function size(): int {
 		return count($this->collection);
 	}
 
-	public function isEmpty() {
+	/**
+	 * Check if the collection contains any element.
+	 * Return true if the collection is empty.
+	 *
+	 * @return bool
+	 */
+	public function isEmpty(): bool {
 		return count($this->collection) == 0;
 	}
 
-	public function clear() {
+	/**
+	 * Remove all elements from the collection.
+	 */
+	public function clear(): void {
 		$this->collection = [];
 	}
 
-	public function toArray() {
+	/**
+	 * Return an array containing all elements of the collection.
+	 *
+	 * @return array
+	 */
+	public function toArray(): array {
 		return $this->collection;
 	}
 
@@ -38,7 +82,7 @@ abstract class AbstractCollection implements Collection {
 	 * @param callable $callback the applied callback function
 	 * @return static
 	 */
-	public function map(callable $callback) {
+	public function map(callable $callback): self {
 		return new static(array_map($callback, $this->collection));
 	}
 
@@ -48,19 +92,20 @@ abstract class AbstractCollection implements Collection {
 	 * @param callable $callback the filter function
 	 * @return static
 	 */
-	public function filter(callable $callback) {
+	public function filter(callable $callback): self {
 		return new static(array_filter($this->collection, $callback));
 	}
 
 	/**
 	 * Tests whether all elements in the collection pass the test implemented by the provided function.
 	 *
-	 * Returns <code>true</code> for an empty collection.
+	 * Returns <code>false</code> if an error occurs otherwise returns <code>true</code>.
+	 * Returns <code>true</code> for an empty collection, too.
 	 *
 	 * @param callable $callback
 	 * @return boolean
 	 */
-	public function every(callable $callback) {
+	public function every(callable $callback): bool {
 		$match = true;
 		foreach ($this->collection as $element) {
 			$match = $match && $callback($element);
@@ -77,7 +122,7 @@ abstract class AbstractCollection implements Collection {
 	 * @param callable $callback
 	 * @return boolean
 	 */
-	public function some(callable $callback) {
+	public function some(callable $callback): bool {
 		$match = false;
 		foreach ($this->collection as $element) {
 			$match = $match || $callback($element);
@@ -97,9 +142,10 @@ abstract class AbstractCollection implements Collection {
 	 *
 	 * @param mixed $query (optional)
 	 * @param callable $callback
+	 *
 	 * @return boolean
 	 */
-	public function search() {
+	public function search(): bool {
 		if (func_num_args() == 1) {
 			$callback = func_get_arg(0);
 		} else {
@@ -128,6 +174,7 @@ abstract class AbstractCollection implements Collection {
 	 *
 	 * @param mixed $query OPTIONAL the provided query
 	 * @param callable $callback the callback function
+	 *
 	 * @return mixed|null the found element or null if it hasn't been found
 	 */
 	public function find() {
@@ -160,6 +207,7 @@ abstract class AbstractCollection implements Collection {
 	 *
 	 * @param mixed $query OPTIONAL the provided query
 	 * @param callable $callback the callback function
+	 *
 	 * @return mixed|null the found element or null if it hasn't been found
 	 */
 	public function findLast() {
@@ -193,9 +241,10 @@ abstract class AbstractCollection implements Collection {
 	 *
 	 * @param mixed $query OPTIONAL the provided query
 	 * @param callable $callback the callback function
-	 * @return mixed|null the found element or null if it hasn't been found
+	 *
+	 * @return null|self the found element or null if it hasn't been found
 	 */
-	public function findAll() {
+	public function findAll(): ?self {
 		if (func_num_args() == 1) {
 			$callback = func_get_arg(0);
 		} else {
@@ -222,14 +271,24 @@ abstract class AbstractCollection implements Collection {
 	 * @param Comparator|callable|null $cmp the compare function
 	 * @param callable $usort the sort function for user passed $cmd
 	 * @param callable $sort the default sort function
+	 *
+ 	 * @internal
 	 */
-	protected function doSort(&$collection, $cmp, callable $usort, callable $sort) {
+	protected function doSort(&$collection, $cmp, callable $usort, callable $sort): void {
 		if (is_callable($cmp)) {
 			$usort($collection, $cmp);
 		} else if ($cmp instanceof Comparator) {
-			$usort($collection, function($a, $b) use ($cmp) {
-				return $cmp->compare($a, $b);
-			});
+			$usort(
+				$collection,
+				/**
+				 * @param mixed $a
+				 * @param mixed $b
+				 * @return int
+				 */
+				function($a, $b) use ($cmp): int {
+					return $cmp->compare($a, $b);
+				}
+			);
 		} else {
 			$sort($collection);
 		}
@@ -252,7 +311,7 @@ abstract class AbstractCollection implements Collection {
 	/**
 	 * @internal
 	 */
-	public function key() {
+	public function key(): int {
 		return key($this->collection);
 	}
 
@@ -266,7 +325,7 @@ abstract class AbstractCollection implements Collection {
 	/**
 	 * @internal
 	 */
-	public function valid() {
+	public function valid(): bool {
 		return key($this->collection) !== null;
 	}
 
@@ -276,5 +335,4 @@ abstract class AbstractCollection implements Collection {
 	public function __clone() {
 		return new static($this->collection);
 	}
-
 }

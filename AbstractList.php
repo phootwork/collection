@@ -1,14 +1,23 @@
-<?php
+<?php declare(strict_types=1);
+/**
+ * This file is part of the Phootwork package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license MIT License
+ * @copyright Thomas Gossmann
+ */
+
 namespace phootwork\collection;
 
 use phootwork\lang\Comparator;
 
 /**
  * Abstract class for all list-like collections
- * 
+ *
+ * @author Thomas Gossmann
  */
 abstract class AbstractList extends AbstractCollection {
-
 	/**
 	 * Iterative reduction of this collection with the help of a callback function. The callback
 	 * function takes two parameters, the first is the carry, the second the current item, with this
@@ -28,7 +37,7 @@ abstract class AbstractList extends AbstractCollection {
 	 * @param Comparator|callable $cmp
 	 * @return $this
 	 */
-	public function sort($cmp = null) {
+	public function sort($cmp = null): self {
 		$this->doSort($this->collection, $cmp, 'usort', 'sort');
 
 		return $this;
@@ -39,7 +48,7 @@ abstract class AbstractList extends AbstractCollection {
 	 * 
 	 * @return $this
 	 */
-	public function reverse() {
+	public function reverse(): self {
 		$this->collection = array_reverse($this->collection);
 		return $this;
 	}
@@ -52,7 +61,7 @@ abstract class AbstractList extends AbstractCollection {
 	 * @param Comparator|callable $cmp
 	 * @return $this
 	 */
-	public function reverseSort($cmp = null) {
+	public function reverseSort($cmp = null): self {
 		return $this->sort($cmp)->reverse();
 	}
 	
@@ -61,67 +70,9 @@ abstract class AbstractList extends AbstractCollection {
 	 * 
 	 * @param callable $callback
 	 */
-	public function each(callable $callback) {
+	public function each(callable $callback): void {
 		foreach ($this->collection as $item) {
 			$callback($item);
 		}
-	}
-
-	/**
-	 * Searches the collection with a given callback and returns the index for the first element if found.
-	 *
-	 * The callback function takes one or two parameters:
-	 *
-	 *     function ($element [, $query]) {}
-	 *
-	 * The callback must return a boolean
-	 *
-	 * @param mixed $query OPTIONAL the provided query
-	 * @param callable $callback the callback function
-	 * @return int|null the index or null if it hasn't been found
-	 */
-	public function findIndex() {
-		if (func_num_args() == 1) {
-			$callback = func_get_arg(0);
-		} else {
-			$query = func_get_arg(0);
-			$callback = func_get_arg(1);
-		}
-		
-		$index = func_num_args() == 1 ? $this->find($callback) : $this->find($query, $callback);
-		if ($index !== null) {
-			$index = $this->indexOf($index);
-		}
-		
-		return $index;
-	}
-	
-	/**
-	 * Searches the collection with a given callback and returns the index for the last element if found.
-	 *
-	 * The callback function takes one or two parameters:
-	 *
-	 *     function ($element [, $query]) {}
-	 *
-	 * The callback must return a boolean
-	 *
-	 * @param mixed $query OPTIONAL the provided query
-	 * @param callable $callback the callback function
-	 * @return int|null the index or null if it hasn't been found
-	 */
-	public function findLastIndex() {
-		if (func_num_args() == 1) {
-			$callback = func_get_arg(0);
-		} else {
-			$query = func_get_arg(0);
-			$callback = func_get_arg(1);
-		}
-		
-		$index = func_num_args() == 1 ? $this->findLast($callback) : $this->findLast($query, $callback);
-		if ($index !== null) {
-			$index = $this->indexOf($index);
-		}
-	
-		return $index;
 	}
 }

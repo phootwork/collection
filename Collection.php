@@ -1,4 +1,13 @@
-<?php
+<?php declare(strict_types=1);
+/**
+ * This file is part of the Phootwork package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license MIT License
+ * @copyright Thomas Gossmann
+ */
+
 namespace phootwork\collection;
 
 /**
@@ -13,14 +22,14 @@ interface Collection extends \Iterator {
 	 * 
 	 * @return void
 	 */
-	public function clear();
+	public function clear(): void;
 	
 	/**
 	 * Checks whether this collection is empty
 	 * 
 	 * @return boolean
 	 */
-	public function isEmpty();
+	public function isEmpty(): bool;
 	
 	/**
 	 * Checks whether the given element is in this collection
@@ -28,19 +37,19 @@ interface Collection extends \Iterator {
 	 * @param mixed $element
 	 * @return boolean
 	 */
-	public function contains($element);
+	public function contains($element): bool;
 	
 	/**
 	 * Returns the amount of elements in this collection
 	 * 
 	 * @return integer
 	 */
-	public function size();
+	public function size(): int;
 
 	/**
 	 * Returns the collection as an array
 	 * 
 	 * @return array
 	 */
-	public function toArray();
+	public function toArray(): array;
 }

@@ -1,4 +1,13 @@
-<?php
+<?php declare(strict_types=1);
+/**
+ * This file is part of the Phootwork package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license MIT License
+ * @copyright Thomas Gossmann
+ */
+
 namespace phootwork\collection;
 
 use \Iterator;
@@ -23,7 +32,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	
 	/**
 	 * @param string|Text $key
-	 * @return string
+	 * @return int|string
 	 */
 	private function extractKey($key) {
 		if ($key instanceof Text) {
@@ -36,11 +45,11 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	/**
 	 * Sets an element with the given key on that map
 	 * 
-	 * @param string key
+	 * @param string|Text $key
 	 * @param mixed $element
 	 * @return Map $this
 	 */
-	public function set($key, $element) {
+	public function set($key, $element): self {
 		$key = $this->extractKey($key);
 		$this->collection[$key] = $element;
 		
@@ -50,7 +59,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	/**
 	 * Returns the element for the given key or your value, if the key doesn't exist.
 	 * 
-	 * @param string $key
+	 * @param string|Text $key
 	 * @param mixed $default the return value, if the key doesn't exist
 	 * @return mixed
 	 */
@@ -85,7 +94,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @param array|Iterator $collection
 	 * @return Map $this
 	 */
-	public function setAll($collection) {
+	public function setAll($collection): self {
 		foreach ($collection as $key => $element) {
 			$this->set($key, $element);
 		}
@@ -97,17 +106,17 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * Removes and returns an element from the map by the given key. Returns null if the key
 	 * does not exist.
 	 * 
-	 * @param string $key
-	 * @return mixed the element at the given key
+	 * @param string|Text $key
+	 * @return $this
 	 */
-	public function remove($key) {
+	public function remove($key): self {
 		$key = $this->extractKey($key);
 		if (isset($this->collection[$key])) {
 			$element = $this->collection[$key];
 			unset($this->collection[$key]);
-			
-			return $element;
 		}
+
+		return $this;
 	}
 	
 	/**
@@ -115,7 +124,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * 
 	 * @return Set the map's keys
 	 */
-	public function keys() {
+	public function keys(): Set {
 		return new Set(array_keys($this->collection));
 	}
 	
@@ -124,17 +133,17 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * 
 	 * @return ArrayList the map's values
 	 */
-	public function values() {
+	public function values(): ArrayList {
 		return new ArrayList(array_values($this->collection));
 	}
 
 	/**
 	 * Returns whether the key exist.
 	 * 
-	 * @param string $key
+	 * @param string|Text $key
 	 * @return boolean
 	 */
-	public function has($key) {
+	public function has($key): bool {
 		$key = $this->extractKey($key);
 		return isset($this->collection[$key]);
 	}
@@ -145,7 +154,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @param Comparator|callable $cmp
 	 * @return $this
 	 */
-	public function sort($cmp = null) {
+	public function sort($cmp = null): self {
 		$this->doSort($this->collection, $cmp, 'uasort', 'asort');
 	
 		return $this;
@@ -157,7 +166,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @param Comparator|callable $cmp
 	 * @return $this
 	 */
-	public function sortKeys($cmp = null) {
+	public function sortKeys($cmp = null): self {
 		$this->doSort($this->collection, $cmp, 'uksort', 'ksort');
 	
 		return $this;
@@ -168,7 +177,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 *
 	 * @param callable $callback
 	 */
-	public function each(callable $callback) {
+	public function each(callable $callback): void {
 		foreach ($this->collection as $key => $value) {
 			$callback($key, $value);
 		}
@@ -189,13 +198,11 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 */
 	public function findKey() {
 		if (func_num_args() == 1) {
-			$callback = func_get_arg(0);
+			$index = $this->find(func_get_arg(0));
 		} else {
-			$query = func_get_arg(0);
-			$callback = func_get_arg(1);
+			$index = $this->find(func_get_arg(0), func_get_arg(1));
 		}
 		
-		$index = func_num_args() == 1 ? $this->find($callback) : $this->find($query, $callback);
 		if ($index !== null) {
 			$index = $this->getKey($index);
 		}
@@ -218,13 +225,11 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 */
 	public function findLastKey() {
 		if (func_num_args() == 1) {
-			$callback = func_get_arg(0);
+			$index = $this->findLast(func_get_arg(0));
 		} else {
-			$query = func_get_arg(0);
-			$callback = func_get_arg(1);
+			$index = $this->findLast(func_get_arg(0), func_get_arg(1));
 		}
 
-		$index = func_num_args() == 1 ? $this->findLast($callback) : $this->findLast($query, $callback);
 		if ($index !== null) {
 			$index = $this->getKey($index);
 		}
@@ -260,6 +265,5 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 */
 	public function offsetGet($offset) {
 		return isset($this->collection[$offset]) ? $this->collection[$offset] : null;
-	}	
-	
+	}
 }
