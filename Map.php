@@ -11,7 +11,9 @@
 namespace phootwork\collection;
 
 use \Iterator;
+use phootwork\lang\AbstractArray;
 use phootwork\lang\Comparator;
+use phootwork\lang\parts\SortAssocPart;
 use phootwork\lang\Text;
 
 /**
@@ -20,6 +22,8 @@ use phootwork\lang\Text;
  * @author Thomas Gossmann
  */
 class Map extends AbstractCollection implements \ArrayAccess {
+
+	use SortAssocPart;
 	
 	/**
 	 * Creates a new Map
@@ -51,7 +55,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 */
 	public function set($key, $element): self {
 		$key = $this->extractKey($key);
-		$this->collection[$key] = $element;
+		$this->array[$key] = $element;
 		
 		return $this;
 	}
@@ -65,8 +69,8 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 */
 	public function get($key, $default = null) {
 		$key = $this->extractKey($key);
-		if (isset($this->collection[$key])) {
-			return $this->collection[$key];
+		if (isset($this->array[$key])) {
+			return $this->array[$key];
 		} else {
 			return $default;
 		}
@@ -79,7 +83,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return mixed
 	 */
 	public function getKey($value) {
-		foreach ($this->collection as $k => $v) {
+		foreach ($this->array as $k => $v) {
 			if ($v === $value) {
 				return $k;
 			}
@@ -111,9 +115,8 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 */
 	public function remove($key): self {
 		$key = $this->extractKey($key);
-		if (isset($this->collection[$key])) {
-			$element = $this->collection[$key];
-			unset($this->collection[$key]);
+		if (isset($this->array[$key])) {
+			unset($this->array[$key]);
 		}
 
 		return $this;
@@ -125,7 +128,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return Set the map's keys
 	 */
 	public function keys(): Set {
-		return new Set(array_keys($this->collection));
+		return new Set(array_keys($this->array));
 	}
 	
 	/**
@@ -134,7 +137,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @return ArrayList the map's values
 	 */
 	public function values(): ArrayList {
-		return new ArrayList(array_values($this->collection));
+		return new ArrayList(array_values($this->array));
 	}
 
 	/**
@@ -145,7 +148,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 */
 	public function has($key): bool {
 		$key = $this->extractKey($key);
-		return isset($this->collection[$key]);
+		return isset($this->array[$key]);
 	}
 	
 	/**
@@ -154,35 +157,21 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @param Comparator|callable $cmp
 	 * @return $this
 	 */
-	public function sort($cmp = null): self {
-		$this->doSort($this->collection, $cmp, 'uasort', 'asort');
-	
-		return $this;
+	public function sort($cmp = null): AbstractArray {
+		return $this->sortAssoc($cmp);
 	}
-	
-	/**
-	 * Sorts the map by keys
-	 *
-	 * @param Comparator|callable $cmp
-	 * @return $this
-	 */
-	public function sortKeys($cmp = null): self {
-		$this->doSort($this->collection, $cmp, 'uksort', 'ksort');
-	
-		return $this;
-	}
-	
+
 	/**
 	 * Iterates the map and calls the callback function with the current key and value as parameters
 	 *
 	 * @param callable $callback
 	 */
 	public function each(callable $callback): void {
-		foreach ($this->collection as $key => $value) {
+		foreach ($this->array as $key => $value) {
 			$callback($key, $value);
 		}
 	}
-	
+
 	/**
 	 * Searches the collection with a given callback and returns the key for the first element if found.
 	 *
@@ -191,25 +180,20 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 *     function ($element [, $query]) {}
 	 *
 	 * The callback must return a boolean
+	 * When it's passed, $query must be the first argument:
 	 *
-	 * @param mixed $query OPTIONAL the provided query
-	 * @param callable $callback the callback function
+	 *     - find($query, callback)
+	 *     - find(callback)
+	 *
+	 * @param array $arguments
 	 * @return mixed|null the key or null if it hasn't been found
 	 */
-	public function findKey() {
-		if (func_num_args() == 1) {
-			$index = $this->find(func_get_arg(0));
-		} else {
-			$index = $this->find(func_get_arg(0), func_get_arg(1));
-		}
-		
-		if ($index !== null) {
-			$index = $this->getKey($index);
-		}
-	
-		return $index;
+	public function findKey(...$arguments) {
+		$index = count($arguments) === 1 ? $this->find($arguments[0]) : $this->find($arguments[0], $arguments[1]);
+
+		return $this->getKey($index);
 	}
-	
+
 	/**
 	 * Searches the collection with a given callback and returns the key for the last element if found.
 	 *
@@ -218,23 +202,18 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 *     function ($element [, $query]) {}
 	 *
 	 * The callback must return a boolean
+	 * When it's passed, $query must be the first argument:
 	 *
-	 * @param mixed $query OPTIONAL the provided query
-	 * @param callable $callback the callback function
+	 *     - find($query, callback)
+	 *     - find(callback)
+	 *
+	 * @param array $arguments
 	 * @return mixed|null the key or null if it hasn't been found
 	 */
-	public function findLastKey() {
-		if (func_num_args() == 1) {
-			$index = $this->findLast(func_get_arg(0));
-		} else {
-			$index = $this->findLast(func_get_arg(0), func_get_arg(1));
-		}
+	public function findLastKey(...$arguments) {
+		$index = count($arguments) === 1 ? $this->findLast($arguments[0]) : $this->findLast($arguments[0], $arguments[1]);
 
-		if ($index !== null) {
-			$index = $this->getKey($index);
-		}
-	
-		return $index;
+		return $this->getKey($index);
 	}
 
 	/**
@@ -242,7 +221,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 */
 	public function offsetSet($offset, $value) {
 		if (!is_null($offset)) {
-			$this->collection[$offset] = $value;
+			$this->array[$offset] = $value;
 		}
 	}
 	
@@ -250,20 +229,20 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * @internal
 	 */
 	public function offsetExists($offset) {
-		return isset($this->collection[$offset]);
+		return isset($this->array[$offset]);
 	}
 	
 	/**
 	 * @internal
 	 */
 	public function offsetUnset($offset) {
-		unset($this->collection[$offset]);
+		unset($this->array[$offset]);
 	}
 	
 	/**
 	 * @internal
 	 */
 	public function offsetGet($offset) {
-		return isset($this->collection[$offset]) ? $this->collection[$offset] : null;
+		return isset($this->array[$offset]) ? $this->array[$offset] : null;
 	}
 }
