@@ -28,7 +28,7 @@ class Queue extends AbstractList {
 	 */
 	public function __construct($collection = []) {
 		foreach ($collection as $element) {
-			$this->collection[] = $element;
+			$this->array[] = $element;
 		}
 	}
 	
@@ -39,7 +39,7 @@ class Queue extends AbstractList {
 	 * @return $this
 	 */
 	public function enqueue($element): self {
-		array_unshift($this->collection, $element);
+		array_unshift($this->array, $element);
 		
 		return $this;
 	}
@@ -65,7 +65,7 @@ class Queue extends AbstractList {
 	 */
 	public function peek() {
 		if ($this->size() > 0) {
-			return $this->collection[0];
+			return $this->array[0];
 		}
 		
 		return null;
@@ -77,6 +77,6 @@ class Queue extends AbstractList {
 	 * @return mixed
 	 */
 	public function poll() {
-		return array_shift($this->collection);
+		return array_shift($this->array);
 	}
 }

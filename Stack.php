@@ -11,6 +11,7 @@
 namespace phootwork\collection;
 
 use \Iterator;
+use phootwork\lang\parts\PopPart;
 
 /**
  * Represents a Stack
@@ -20,6 +21,8 @@ use \Iterator;
  * @author Thomas Gossmann
  */
 class Stack extends AbstractList {
+
+	use PopPart;
 
 	/**
 	 * Creates a new ArrayList
@@ -37,7 +40,7 @@ class Stack extends AbstractList {
 	 * @return $this
 	 */
 	public function push($element): self {
-		array_push($this->collection, $element);
+		array_push($this->array, $element);
 		
 		return $this;
 	}
@@ -63,18 +66,9 @@ class Stack extends AbstractList {
 	 */
 	public function peek() {
 		if ($this->size() > 0) {
-			return $this->collection[$this->size() - 1];
+			return $this->array[$this->size() - 1];
 		}
 
 		return null;
-	}
-	
-	/**
-	 * Pops the element at the head from the stack or null if the stack is empty
-	 * 
-	 * @return mixed
-	 */
-	public function pop() {
-		return array_pop($this->collection);
 	}
 }
