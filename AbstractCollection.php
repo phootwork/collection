@@ -7,7 +7,6 @@
  * @license MIT License
  * @copyright Thomas Gossmann
  */
-
 namespace phootwork\collection;
 
 use phootwork\lang\AbstractArray;
@@ -22,42 +21,42 @@ abstract class AbstractCollection extends AbstractArray implements Collection {
 	/**
 	 * Remove all elements from the collection.
 	 */
-	public function clear(): void {
-		$this->array = [];
-	}
+    public function clear(): void {
+        $this->array = [];
+    }
 
-	/**
-	 * @internal
-	 */
-	public function rewind() {
-		return reset($this->array);
-	}
+    /**
+     * @internal
+     */
+    public function rewind() {
+        return reset($this->array);
+    }
 
-	/**
-	 * @internal
-	 */
-	public function current() {
-		return current($this->array);
-	}
+    /**
+     * @internal
+     */
+    public function current() {
+        return current($this->array);
+    }
 
-	/**
-	 * @internal
-	 */
-	public function key(): int {
-		return key($this->array);
-	}
+    /**
+     * @internal
+     */
+    public function key(): int {
+        return key($this->array);
+    }
 
-	/**
-	 * @internal
-	 */
-	public function next() {
-		return next($this->array);
-	}
+    /**
+     * @internal
+     */
+    public function next() {
+        return next($this->array);
+    }
 
-	/**
-	 * @internal
-	 */
-	public function valid(): bool {
-		return key($this->array) !== null;
-	}
+    /**
+     * @internal
+     */
+    public function valid(): bool {
+        return key($this->array) !== null;
+    }
 }
