@@ -7,10 +7,9 @@
  * @license MIT License
  * @copyright Thomas Gossmann
  */
-
 namespace phootwork\collection;
 
-use \Iterator;
+use Iterator;
 use phootwork\lang\parts\AccessorsPart;
 use phootwork\lang\parts\AddAllPart;
 use phootwork\lang\parts\AddPart;
@@ -21,29 +20,29 @@ use phootwork\lang\parts\AddPart;
  * @author Thomas Gossmann
  */
 class ArrayList extends AbstractList {
+    use AccessorsPart, AddPart, AddAllPart;
 
-	use AccessorsPart, AddPart, AddAllPart;
+    /**
+     * Creates a new ArrayList
+     * 
+     * @param array|Iterator $collection
+     */
+    public function __construct($collection = []) {
+        $this->addAll($collection);
+    }
 
-	/**
-	 * Creates a new ArrayList
-	 * 
-	 * @param array|Iterator $collection
-	 */
-	public function __construct($collection = []) {
-		$this->addAll($collection);
-	}
+    /**
+     * Removes an element from the list by its index.
+     *
+     * @param int $index
+     *
+     * @return ArrayList
+     */
+    public function removeByIndex(int $index): self {
+        if (isset($this->array[$index])) {
+            unset($this->array[$index]);
+        }
 
-	/**
-	 * Removes an element from the list by its index.
-	 *
-	 * @param int $index
-	 * @return ArrayList
-	 */
-	public function removeByIndex(int $index): self {
-		if (isset($this->array[$index])) {
-			unset($this->array[$index]);
-		}
-
-		return $this;
-	}
+        return $this;
+    }
 }
