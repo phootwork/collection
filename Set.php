@@ -18,29 +18,29 @@ use phootwork\lang\parts\AddAllPart;
  * @author Thomas Gossmann
  */
 class Set extends AbstractList {
-    use AddAllPart;
+	use AddAllPart;
 
-    /**
-     * Creates a new Set
-     *
-     * @param array|Iterator $collection
-     */
-    public function __construct($collection = []) {
-        $this->addAll($collection);
-    }
+	/**
+	 * Creates a new Set
+	 *
+	 * @param array|Iterator $collection
+	 */
+	public function __construct($collection = []) {
+		$this->addAll($collection);
+	}
 
-    /**
-     * Adds an element to that set
-     *
-     * @param mixed $element
-     *
-     * @return $this
-     */
-    public function add($element): self {
-        if (!in_array($element, $this->array, true)) {
-            $this->array[$this->size()] = $element;
-        }
+	/**
+	 * Adds an element to that set
+	 *
+	 * @param mixed $element
+	 *
+	 * @return $this
+	 */
+	public function add($element): self {
+		if (!in_array($element, $this->array, true)) {
+			$this->array[$this->size()] = $element;
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 }

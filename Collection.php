@@ -21,35 +21,35 @@ interface Collection extends \Iterator {
 	 * 
 	 * @return void
 	 */
-    public function clear(): void;
+	public function clear(): void;
 
-    /**
-     * Checks whether this collection is empty
-     * 
-     * @return bool
-     */
-    public function isEmpty(): bool;
+	/**
+	 * Checks whether this collection is empty
+	 * 
+	 * @return bool
+	 */
+	public function isEmpty(): bool;
 
-    /**
-     * Checks whether the given element is in this collection
-     * 
-     * @param mixed $element
-     *
-     * @return bool
-     */
-    public function contains($element): bool;
+	/**
+	 * Checks whether the given element is in this collection
+	 * 
+	 * @param mixed $element
+	 *
+	 * @return bool
+	 */
+	public function contains($element): bool;
 
-    /**
-     * Returns the amount of elements in this collection
-     * 
-     * @return int
-     */
-    public function size(): int;
+	/**
+	 * Returns the amount of elements in this collection
+	 * 
+	 * @return int
+	 */
+	public function size(): int;
 
-    /**
-     * Returns the collection as an array
-     * 
-     * @return array
-     */
-    public function toArray(): array;
+	/**
+	 * Returns the collection as an array
+	 * 
+	 * @return array
+	 */
+	public function toArray(): array;
 }
