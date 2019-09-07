@@ -25,59 +25,59 @@ class Queue extends AbstractList {
 	 * 
 	 * @param array|Iterator $collection
 	 */
-    public function __construct($collection = []) {
-        foreach ($collection as $element) {
-            $this->array[] = $element;
-        }
-    }
+	public function __construct($collection = []) {
+		foreach ($collection as $element) {
+			$this->array[] = $element;
+		}
+	}
 
-    /**
-     * Enqueues an element
-     * 
-     * @param mixed $element
-     *
-     * @return $this
-     */
-    public function enqueue($element): self {
-        array_unshift($this->array, $element);
+	/**
+	 * Enqueues an element
+	 * 
+	 * @param mixed $element
+	 *
+	 * @return $this
+	 */
+	public function enqueue($element): self {
+		array_unshift($this->array, $element);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Enqueues many elements
-     *
-     * @param array|Iterator $collection
-     *
-     * @return $this
-     */
-    public function enqueueAll($collection): self {
-        foreach ($collection as $element) {
-            $this->enqueue($element);
-        }
+	/**
+	 * Enqueues many elements
+	 *
+	 * @param array|Iterator $collection
+	 *
+	 * @return $this
+	 */
+	public function enqueueAll($collection): self {
+		foreach ($collection as $element) {
+			$this->enqueue($element);
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Returns the element at the head or null if the queue is empty but doesn't remove that element  
-     * 
-     * @return mixed
-     */
-    public function peek() {
-        if ($this->size() > 0) {
-            return $this->array[0];
-        }
+	/**
+	 * Returns the element at the head or null if the queue is empty but doesn't remove that element  
+	 * 
+	 * @return mixed
+	 */
+	public function peek() {
+		if ($this->size() > 0) {
+			return $this->array[0];
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    /**
-     * Removes and returns the element at the head or null if the is empty
-     * 
-     * @return mixed
-     */
-    public function poll() {
-        return array_shift($this->array);
-    }
+	/**
+	 * Removes and returns the element at the head or null if the is empty
+	 * 
+	 * @return mixed
+	 */
+	public function poll() {
+		return array_shift($this->array);
+	}
 }

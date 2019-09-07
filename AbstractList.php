@@ -23,19 +23,19 @@ use phootwork\lang\parts\ReversePart;
  * @author Cristiano Cinotti
  */
 abstract class AbstractList extends AbstractCollection {
-    use EachPart, IndexFindersPart, ReducePart, RemovePart, ReversePart;
+	use EachPart, IndexFindersPart, ReducePart, RemovePart, ReversePart;
 
-    /**
-     * Sorts the collection in reverse order
-     * 
-     * @see #sort
-     * @see #reverse
-     *
-     * @param Comparator|callable $cmp
-     *
-     * @return $this
-     */
-    public function reverseSort($cmp = null): self {
-        return $this->sort($cmp)->reverse();
-    }
+	/**
+	 * Sorts the collection in reverse order
+	 * 
+	 * @see #sort
+	 * @see #reverse
+	 *
+	 * @param Comparator|callable $cmp
+	 *
+	 * @return $this
+	 */
+	public function reverseSort($cmp = null): self {
+		return $this->sort($cmp)->reverse();
+	}
 }

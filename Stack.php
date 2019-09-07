@@ -20,55 +20,55 @@ use phootwork\lang\parts\PopPart;
  * @author Thomas Gossmann
  */
 class Stack extends AbstractList {
-    use PopPart;
+	use PopPart;
 
-    /**
-     * Creates a new ArrayList
-     * 
-     * @param array|Iterator $collection
-     */
-    public function __construct($collection = []) {
-        $this->pushAll($collection);
-    }
+	/**
+	 * Creates a new ArrayList
+	 * 
+	 * @param array|Iterator $collection
+	 */
+	public function __construct($collection = []) {
+		$this->pushAll($collection);
+	}
 
-    /**
-     * Pushes an element onto the stack
-     * 
-     * @param mixed $element
-     *
-     * @return $this
-     */
-    public function push($element): self {
-        array_push($this->array, $element);
+	/**
+	 * Pushes an element onto the stack
+	 * 
+	 * @param mixed $element
+	 *
+	 * @return $this
+	 */
+	public function push($element): self {
+		array_push($this->array, $element);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Pushes many elements onto the stack
-     *
-     * @param array|Iterator $collection
-     *
-     * @return $this
-     */
-    public function pushAll($collection): self {
-        foreach ($collection as $element) {
-            $this->push($element);
-        }
+	/**
+	 * Pushes many elements onto the stack
+	 *
+	 * @param array|Iterator $collection
+	 *
+	 * @return $this
+	 */
+	public function pushAll($collection): self {
+		foreach ($collection as $element) {
+			$this->push($element);
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Returns the element at the head or null if the stack is empty but doesn't remove that element  
-     * 
-     * @return mixed
-     */
-    public function peek() {
-        if ($this->size() > 0) {
-            return $this->array[$this->size() - 1];
-        }
+	/**
+	 * Returns the element at the head or null if the stack is empty but doesn't remove that element  
+	 * 
+	 * @return mixed
+	 */
+	public function peek() {
+		if ($this->size() > 0) {
+			return $this->array[$this->size() - 1];
+		}
 
-        return null;
-    }
+		return null;
+	}
 }
