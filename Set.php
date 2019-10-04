@@ -10,7 +10,6 @@
 namespace phootwork\collection;
 
 use Iterator;
-use phootwork\lang\parts\AddAllPart;
 
 /**
  * Represents a Set
@@ -18,7 +17,6 @@ use phootwork\lang\parts\AddAllPart;
  * @author Thomas Gossmann
  */
 class Set extends AbstractList {
-	use AddAllPart;
 
 	/**
 	 * Creates a new Set
@@ -26,19 +24,21 @@ class Set extends AbstractList {
 	 * @param array|Iterator $collection
 	 */
 	public function __construct($collection = []) {
-		$this->addAll($collection);
+		$this->add(...$collection);
 	}
 
 	/**
 	 * Adds an element to that set
 	 *
-	 * @param mixed $element
+	 * @param mixed ...$elements
 	 *
 	 * @return $this
 	 */
-	public function add($element): self {
-		if (!in_array($element, $this->array, true)) {
-			$this->array[$this->size()] = $element;
+	public function add(...$elements): self {
+		foreach ($elements as $element) {
+			if (!in_array($element, $this->array, true)) {
+				$this->array[$this->size()] = $element;
+			}
 		}
 
 		return $this;
