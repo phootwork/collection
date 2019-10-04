@@ -96,7 +96,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 
 	/**
 	 * Sets many elements on that map
-	 * 
+	 *
 	 * @param array|Iterator $collection
 	 *
 	 * @return Map $this

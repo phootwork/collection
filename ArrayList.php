@@ -11,16 +11,21 @@ namespace phootwork\collection;
 
 use Iterator;
 use phootwork\lang\parts\AccessorsPart;
-use phootwork\lang\parts\AddAllPart;
 use phootwork\lang\parts\AddPart;
+use phootwork\lang\parts\InsertPart;
 
 /**
  * Represents a List
  * 
  * @author Thomas Gossmann
+ * @author Cristiano Cinotti
  */
 class ArrayList extends AbstractList {
-	use AccessorsPart, AddPart, AddAllPart;
+	use AccessorsPart {
+		get as traitGet;
+	}
+	use AddPart;
+	use InsertPart;
 
 	/**
 	 * Creates a new ArrayList
@@ -28,7 +33,9 @@ class ArrayList extends AbstractList {
 	 * @param array|Iterator $collection
 	 */
 	public function __construct($collection = []) {
-		$this->addAll($collection);
+		foreach ($collection as $element) {
+			$this->add($element);
+		}
 	}
 
 	/**
@@ -44,5 +51,16 @@ class ArrayList extends AbstractList {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Returns the element at the given index (or null if the index isn't present)
+	 *
+	 * @param int $index
+	 *
+	 * @return mixed
+	 */
+	public function get(int $index) {
+		return $this->traitGet($index);
 	}
 }
