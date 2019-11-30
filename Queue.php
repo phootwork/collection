@@ -34,26 +34,13 @@ class Queue extends AbstractList {
 	/**
 	 * Enqueues an element
 	 * 
-	 * @param mixed $element
+	 * @param mixed ...$elements
 	 *
 	 * @return $this
 	 */
-	public function enqueue($element): self {
-		array_unshift($this->array, $element);
-
-		return $this;
-	}
-
-	/**
-	 * Enqueues many elements
-	 *
-	 * @param array|Iterator $collection
-	 *
-	 * @return $this
-	 */
-	public function enqueueAll($collection): self {
-		foreach ($collection as $element) {
-			$this->enqueue($element);
+	public function enqueue(...$elements): self {
+		foreach ($elements as $element) {
+			array_unshift($this->array, $element);
 		}
 
 		return $this;
