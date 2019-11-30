@@ -28,32 +28,19 @@ class Stack extends AbstractList {
 	 * @param array|Iterator $collection
 	 */
 	public function __construct($collection = []) {
-		$this->pushAll($collection);
+		$this->push(...$collection);
 	}
 
 	/**
 	 * Pushes an element onto the stack
 	 * 
-	 * @param mixed $element
+	 * @param mixed ...$elements
 	 *
 	 * @return $this
 	 */
-	public function push($element): self {
-		array_push($this->array, $element);
-
-		return $this;
-	}
-
-	/**
-	 * Pushes many elements onto the stack
-	 *
-	 * @param array|Iterator $collection
-	 *
-	 * @return $this
-	 */
-	public function pushAll($collection): self {
-		foreach ($collection as $element) {
-			$this->push($element);
+	public function push(...$elements): self {
+		foreach ($elements as $element) {
+			array_push($this->array, $element);
 		}
 
 		return $this;
