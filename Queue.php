@@ -26,9 +26,7 @@ class Queue extends AbstractList {
 	 * @param array|Iterator $collection
 	 */
 	public function __construct($collection = []) {
-		foreach ($collection as $element) {
-			$this->array[] = $element;
-		}
+		$this->enqueue(...$collection);
 	}
 
 	/**
@@ -39,8 +37,9 @@ class Queue extends AbstractList {
 	 * @return $this
 	 */
 	public function enqueue(...$elements): self {
-		foreach ($elements as $element) {
-			array_unshift($this->array, $element);
+		//Workaround for PHP 7.2
+		if ($elements !== []) {
+			array_unshift($this->array, ...$elements);
 		}
 
 		return $this;
