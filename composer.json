@@ -31,7 +31,7 @@
 	},
 	"require" : {
 		"php" : ">=7.2",
-		"phootwork/lang" : "^2.0"
+		"phootwork/lang" : "2.0@dev"
 	},
 	"homepage" : "https://phootwork.github.io/collection/"
 }
