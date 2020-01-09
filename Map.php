@@ -61,19 +61,16 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	}
 
 	/**
-	 * Returns the element for the given key or your value, if the key doesn't exist.
+	 * Returns the element for the given key
 	 * 
 	 * @param string|Text $key
-	 * @param mixed $default the return value, if the key doesn't exist
 	 *
 	 * @return mixed
 	 */
-	public function get($key, $default = null) {
+	public function get($key) {
 		$key = $this->extractKey($key);
 		if (isset($this->array[$key])) {
 			return $this->array[$key];
-		} else {
-			return $default;
 		}
 	}
 
