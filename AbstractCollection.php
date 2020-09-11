@@ -28,8 +28,8 @@ abstract class AbstractCollection extends AbstractArray implements Collection {
 	/**
 	 * @internal
 	 */
-	public function rewind() {
-		return reset($this->array);
+	public function rewind(): void {
+		reset($this->array);
 	}
 
 	/**
@@ -49,8 +49,8 @@ abstract class AbstractCollection extends AbstractArray implements Collection {
 	/**
 	 * @internal
 	 */
-	public function next() {
-		return next($this->array);
+	public function next(): void {
+		next($this->array);
 	}
 
 	/**
