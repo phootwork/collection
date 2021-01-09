@@ -35,14 +35,14 @@ abstract class AbstractCollection extends AbstractArray implements Collection {
 	/**
 	 * @internal
 	 */
-	public function current() {
+	public function current(): mixed {
 		return current($this->array);
 	}
 
 	/**
 	 * @internal
 	 */
-	public function key() {
+	public function key(): int | string | null {
 		return key($this->array);
 	}
 

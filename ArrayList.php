@@ -38,7 +38,7 @@ class ArrayList extends AbstractList {
 	 * 
 	 * @param array|Iterator $collection
 	 */
-	public function __construct($collection = []) {
+	public function __construct(array | Iterator $collection = []) {
 		foreach ($collection as $element) {
 			$this->add($element);
 		}
@@ -66,7 +66,7 @@ class ArrayList extends AbstractList {
 	 *
 	 * @return mixed
 	 */
-	public function get(int $index) {
+	public function get(int $index): mixed {
 		return $this->traitGet($index);
 	}
 
@@ -75,9 +75,9 @@ class ArrayList extends AbstractList {
 	 *
 	 * @param mixed $element
 	 *
-	 * @return int the index for the given element
+	 * @return int|null the index for the given element
 	 */
-	public function indexOf($element): ?int {
+	public function indexOf(mixed $element): ?int {
 		$index = $this->traitIndexOf($element);
 
 		return $index === null ? $index : (int) $index;
@@ -100,7 +100,7 @@ class ArrayList extends AbstractList {
 	 *
 	 * @return int|null the index or null if it hasn't been found
 	 */
-	public function findLastIndex(...$arguments): ?int {
+	public function findLastIndex(mixed ...$arguments): ?int {
 		$lastIndex = $this->traitFindLastIndex(...$arguments);
 
 		return $lastIndex === null ? $lastIndex : (int) $lastIndex;
@@ -123,7 +123,7 @@ class ArrayList extends AbstractList {
 	 *
 	 * @return int|null the index or null if it hasn't been found
 	 */
-	public function findIndex(...$arguments): ?int {
+	public function findIndex(mixed ...$arguments): ?int {
 		$index = $this->traitFindIndex(...$arguments);
 
 		return $index === null ? $index : (int) $index;

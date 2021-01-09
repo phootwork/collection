@@ -29,15 +29,15 @@ abstract class AbstractList extends AbstractCollection {
 
 	/**
 	 * Sorts the collection in reverse order
-	 * 
+	 *
 	 * @see #sort
 	 * @see #reverse
 	 *
-	 * @param Comparator|callable $cmp
+	 * @param Comparator|callable|null $cmp
 	 *
 	 * @return $this
 	 */
-	public function reverseSort($cmp = null): self {
+	public function reverseSort(Comparator | callable | null $cmp = null): self {
 		return $this->sort($cmp)->reverse();
 	}
 }

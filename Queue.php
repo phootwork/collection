@@ -25,7 +25,7 @@ class Queue extends AbstractList {
 	 * 
 	 * @param array|Iterator $collection
 	 */
-	public function __construct($collection = []) {
+	public function __construct(array | Iterator $collection = []) {
 		$this->enqueue(...$collection);
 	}
 
@@ -36,11 +36,8 @@ class Queue extends AbstractList {
 	 *
 	 * @return $this
 	 */
-	public function enqueue(...$elements): self {
-		//Workaround for PHP 7.2
-		if ($elements !== []) {
-			array_unshift($this->array, ...$elements);
-		}
+	public function enqueue(mixed ...$elements): self {
+		array_unshift($this->array, ...$elements);
 
 		return $this;
 	}
@@ -50,7 +47,7 @@ class Queue extends AbstractList {
 	 * 
 	 * @return mixed
 	 */
-	public function peek() {
+	public function peek(): mixed {
 		if ($this->size() > 0) {
 			return $this->array[0];
 		}
@@ -63,7 +60,7 @@ class Queue extends AbstractList {
 	 * 
 	 * @return mixed
 	 */
-	public function poll() {
+	public function poll(): mixed {
 		return array_shift($this->array);
 	}
 }

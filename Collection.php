@@ -37,7 +37,7 @@ interface Collection extends \Iterator {
 	 *
 	 * @return bool
 	 */
-	public function contains($element): bool;
+	public function contains(mixed $element): bool;
 
 	/**
 	 * Returns the amount of elements in this collection

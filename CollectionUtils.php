@@ -25,17 +25,13 @@ class CollectionUtils {
 	 * Returns a proper collection for the given array (also transforms nested collections)
 	 * (experimental API)
 	 *
-	 * @param mixed|array|Iterator $collection
+	 * @param array|Iterator $collection
 	 *
 	 * @throws InvalidArgumentException
 	 *
 	 * @return Map|ArrayList the collection
 	 */
-	public static function fromCollection($collection) {
-		if (!(is_array($collection) || $collection instanceof Iterator)) {
-			throw new InvalidArgumentException('$collection is neither an array nor an iterator');
-		}
-
+	public static function fromCollection(array | Iterator $collection): Map | ArrayList {
 		return self::toCollection($collection);
 	}
 
@@ -44,7 +40,7 @@ class CollectionUtils {
 	 *
 	 * @return mixed|ArrayList|Map
 	 */
-	private static function toCollection($data) {
+	private static function toCollection(mixed $data): mixed {
 		// prepare normal array
 		if (!($data instanceof Iterator)) {
 			$data = json_decode(json_encode($data));
@@ -72,7 +68,7 @@ class CollectionUtils {
 	 *
 	 * @return Map
 	 */
-	public static function toMap($collection): Map {
+	public static function toMap(Iterator | array | stdClass $collection): Map {
 		if ($collection instanceof stdClass) {
 			$collection = json_decode(json_encode($collection), true);
 		}
@@ -93,7 +89,7 @@ class CollectionUtils {
 	 *
 	 * @return ArrayList
 	 */
-	public static function toList($collection): ArrayList {
+	public static function toList(Iterator | array $collection): ArrayList {
 		$list = new ArrayList();
 		foreach ($collection as $v) {
 			$list->add(self::toCollection($v));
@@ -109,24 +105,19 @@ class CollectionUtils {
 	 *
 	 * @return array
 	 */
-	public static function toArrayRecursive($collection): array {
+	public static function toArrayRecursive(mixed $collection): array {
 		$arr = $collection;
 		if (is_object($collection) && method_exists($collection, 'toArray')) {
 			$arr = $collection->toArray();
 		}
 
-		return array_map(
-		/**
-		 * @param mixed $v
-		 *
-		 * @return mixed
-		 */
-			function ($v) {
-				if (is_object($v) && method_exists($v, 'toArray')) {
-					return static::toArrayRecursive($v);
-				}
+		return array_map(function (mixed $v): mixed {
+			if (is_object($v) && method_exists($v, 'toArray')) {
+				return static::toArrayRecursive($v);
+			}
 
-				return $v;
-			}, $arr);
+			return $v;
+		},
+			$arr);
 	}
 }

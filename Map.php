@@ -28,33 +28,20 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 * 
 	 * @param array|Iterator $collection
 	 */
-	public function __construct($collection = []) {
+	public function __construct(array | Iterator $collection = []) {
 		$this->setAll($collection);
-	}
-
-	/**
-	 * @param string|Text $key
-	 *
-	 * @return int|string
-	 */
-	private function extractKey($key) {
-		if ($key instanceof Text) {
-			return $key->toString();
-		}
-
-		return $key;
 	}
 
 	/**
 	 * Sets an element with the given key on that map
 	 * 
-	 * @param string|Text $key
+	 * @param string|int|Text $key
 	 * @param mixed $element
 	 *
 	 * @return Map $this
 	 */
-	public function set($key, $element): self {
-		$key = $this->extractKey($key);
+	public function set(string | int | Text $key, mixed $element): self {
+		$key = is_int($key) ? $key : (string) $key;
 		$this->array[$key] = $element;
 
 		return $this;
@@ -63,25 +50,24 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	/**
 	 * Returns the element for the given key
 	 * 
-	 * @param string|Text $key
+	 * @param string|int|Text $key
 	 *
 	 * @return mixed
 	 */
-	public function get($key) {
-		$key = $this->extractKey($key);
-		if (isset($this->array[$key])) {
-			return $this->array[$key];
-		}
+	public function get(string | int | Text $key): mixed {
+		$key = is_int($key) ? $key : (string) $key;
+
+		return $this->array[$key] ?? null;
 	}
 
 	/**
-	 * Returns the key for the given value
-	 * 
+	 * Returns the key for the given value or null if not found
+	 *
 	 * @param mixed $value the value
 	 *
-	 * @return mixed
+	 * @return string|null
 	 */
-	public function getKey($value) {
+	public function getKey(mixed $value): ?string {
 		foreach ($this->array as $k => $v) {
 			if ($v === $value) {
 				return $k;
@@ -98,7 +84,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 *
 	 * @return Map $this
 	 */
-	public function setAll($collection): self {
+	public function setAll(array | Iterator $collection): self {
 		foreach ($collection as $key => $element) {
 			$this->set($key, $element);
 		}
@@ -114,10 +100,9 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 *
 	 * @return $this
 	 */
-	public function remove($key): self {
-		$key = $this->extractKey($key);
-		if (isset($this->array[$key])) {
-			unset($this->array[$key]);
+	public function remove(string | Text $key): self {
+		if (isset($this->array[(string) $key])) {
+			unset($this->array[(string) $key]);
 		}
 
 		return $this;
@@ -148,20 +133,18 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 *
 	 * @return bool
 	 */
-	public function has($key): bool {
-		$key = $this->extractKey($key);
-
-		return isset($this->array[$key]);
+	public function has(string | Text $key): bool {
+		return isset($this->array[(string) $key]);
 	}
 
 	/**
 	 * Sorts the map
 	 *
-	 * @param Comparator|callable $cmp
+	 * @param Comparator|callable|null $cmp
 	 *
 	 * @return $this
 	 */
-	public function sort($cmp = null): AbstractArray {
+	public function sort(Comparator | callable | null $cmp = null): AbstractArray {
 		return $this->sortAssoc($cmp);
 	}
 
@@ -193,7 +176,7 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 *
 	 * @return mixed|null the key or null if it hasn't been found
 	 */
-	public function findKey(...$arguments) {
+	public function findKey(mixed ...$arguments) {
 		$index = count($arguments) === 1 ? $this->find($arguments[0]) : $this->find($arguments[0], $arguments[1]);
 
 		return $this->getKey($index);
@@ -216,39 +199,52 @@ class Map extends AbstractCollection implements \ArrayAccess {
 	 *
 	 * @return mixed|null the key or null if it hasn't been found
 	 */
-	public function findLastKey(...$arguments) {
+	public function findLastKey(mixed ...$arguments) {
 		$index = count($arguments) === 1 ? $this->findLast($arguments[0]) : $this->findLast($arguments[0], $arguments[1]);
 
 		return $this->getKey($index);
 	}
 
 	/**
+	 * @param mixed $offset
+	 * @param mixed $value
+	 *
 	 * @internal
 	 */
-	public function offsetSet($offset, $value) {
+	public function offsetSet(mixed $offset, mixed $value): void {
 		if (!is_null($offset)) {
 			$this->array[$offset] = $value;
 		}
 	}
 
 	/**
+	 * @param mixed $offset
+	 *
+	 * @return bool
+	 *
 	 * @internal
 	 */
-	public function offsetExists($offset) {
+	public function offsetExists(mixed $offset): bool {
 		return isset($this->array[$offset]);
 	}
 
 	/**
+	 * @param mixed $offset
+	 *
 	 * @internal
 	 */
-	public function offsetUnset($offset) {
+	public function offsetUnset(mixed $offset): void {
 		unset($this->array[$offset]);
 	}
 
 	/**
+	 * @param mixed $offset
+	 *
+	 * @return mixed
+	 *
 	 * @internal
 	 */
-	public function offsetGet($offset) {
+	public function offsetGet(mixed $offset): mixed {
 		return isset($this->array[$offset]) ? $this->array[$offset] : null;
 	}
 }

@@ -30,8 +30,8 @@
 		}
 	},
 	"require" : {
-		"php" : ">=7.2",
-		"phootwork/lang" : "^2.0"
+		"php" : ">=8.0",
+		"phootwork/lang" : "^3.0"
 	},
 	"homepage" : "https://phootwork.github.io/collection/"
 }

@@ -27,7 +27,7 @@ class Stack extends AbstractList {
 	 * 
 	 * @param array|Iterator $collection
 	 */
-	public function __construct($collection = []) {
+	public function __construct(array | Iterator $collection = []) {
 		$this->push(...$collection);
 	}
 
@@ -38,7 +38,7 @@ class Stack extends AbstractList {
 	 *
 	 * @return $this
 	 */
-	public function push(...$elements): self {
+	public function push(mixed ...$elements): self {
 		foreach ($elements as $element) {
 			array_push($this->array, $element);
 		}
@@ -51,7 +51,7 @@ class Stack extends AbstractList {
 	 * 
 	 * @return mixed
 	 */
-	public function peek() {
+	public function peek(): mixed {
 		if ($this->size() > 0) {
 			return $this->array[$this->size() - 1];
 		}
