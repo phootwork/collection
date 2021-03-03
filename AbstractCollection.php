@@ -42,7 +42,7 @@ abstract class AbstractCollection extends AbstractArray implements Collection {
 	/**
 	 * @internal
 	 */
-	public function key(): int | string | null {
+	public function key(): int|string|null {
 		return key($this->array);
 	}
 

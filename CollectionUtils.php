@@ -9,7 +9,6 @@
  */
 namespace phootwork\collection;
 
-use InvalidArgumentException;
 use Iterator;
 use stdClass;
 
@@ -27,22 +26,25 @@ class CollectionUtils {
 	 *
 	 * @param array|Iterator $collection
 	 *
-	 * @throws InvalidArgumentException
-	 *
 	 * @return Map|ArrayList the collection
+	 *
+	 * @psalm-suppress MixedReturnStatement `self::toCollection()` returns a collection if the input
+	 *                                      is an array or Iterator
+	 * @psalm-suppress MixedInferredReturnType
 	 */
-	public static function fromCollection(array | Iterator $collection): Map | ArrayList {
+	public static function fromCollection(array|Iterator $collection): Map|ArrayList {
 		return self::toCollection($collection);
 	}
 
 	/**
 	 * @param mixed $data
 	 *
-	 * @return mixed|ArrayList|Map
+	 * @return mixed
 	 */
 	private static function toCollection(mixed $data): mixed {
 		// prepare normal array
 		if (!($data instanceof Iterator)) {
+			/** @var mixed $data */
 			$data = json_decode(json_encode($data));
 		}
 
@@ -68,12 +70,17 @@ class CollectionUtils {
 	 *
 	 * @return Map
 	 */
-	public static function toMap(Iterator | array | stdClass $collection): Map {
+	public static function toMap(Iterator|array|stdClass $collection): Map {
 		if ($collection instanceof stdClass) {
+			/** @var array $collection */
 			$collection = json_decode(json_encode($collection), true);
 		}
 
 		$map = new Map();
+		/**
+		 * @var string $k
+		 * @var string $v
+		 */
 		foreach ($collection as $k => $v) {
 			$map->set($k, self::toCollection($v));
 		}
@@ -89,8 +96,9 @@ class CollectionUtils {
 	 *
 	 * @return ArrayList
 	 */
-	public static function toList(Iterator | array $collection): ArrayList {
+	public static function toList(Iterator|array $collection): ArrayList {
 		$list = new ArrayList();
+		/** @var mixed $v */
 		foreach ($collection as $v) {
 			$list->add(self::toCollection($v));
 		}
@@ -104,6 +112,8 @@ class CollectionUtils {
 	 * @param mixed $collection
 	 *
 	 * @return array
+	 *
+	 * @psalm-suppress MixedAssignment
 	 */
 	public static function toArrayRecursive(mixed $collection): array {
 		$arr = $collection;
@@ -111,6 +121,7 @@ class CollectionUtils {
 			$arr = $collection->toArray();
 		}
 
+		/** @var array $arr */
 		return array_map(function (mixed $v): mixed {
 			if (is_object($v) && method_exists($v, 'toArray')) {
 				return static::toArrayRecursive($v);

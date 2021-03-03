@@ -25,7 +25,7 @@ class Queue extends AbstractList {
 	 * 
 	 * @param array|Iterator $collection
 	 */
-	public function __construct(array | Iterator $collection = []) {
+	public function __construct(array|Iterator $collection = []) {
 		$this->enqueue(...$collection);
 	}
 

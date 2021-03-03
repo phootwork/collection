@@ -38,7 +38,8 @@ class ArrayList extends AbstractList {
 	 * 
 	 * @param array|Iterator $collection
 	 */
-	public function __construct(array | Iterator $collection = []) {
+	public function __construct(array|Iterator $collection = []) {
+		/** @var mixed $element */
 		foreach ($collection as $element) {
 			$this->add($element);
 		}
@@ -54,6 +55,10 @@ class ArrayList extends AbstractList {
 	public function removeByIndex(int $index): self {
 		if (isset($this->array[$index])) {
 			unset($this->array[$index]);
+
+			if (!array_is_list($this->array)) {
+				$this->array = array_values($this->array);
+			}
 		}
 
 		return $this;

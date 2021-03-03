@@ -27,7 +27,7 @@ class Stack extends AbstractList {
 	 * 
 	 * @param array|Iterator $collection
 	 */
-	public function __construct(array | Iterator $collection = []) {
+	public function __construct(array|Iterator $collection = []) {
 		$this->push(...$collection);
 	}
 
@@ -39,9 +39,7 @@ class Stack extends AbstractList {
 	 * @return $this
 	 */
 	public function push(mixed ...$elements): self {
-		foreach ($elements as $element) {
-			array_push($this->array, $element);
-		}
+		array_push($this->array, ...$elements);
 
 		return $this;
 	}

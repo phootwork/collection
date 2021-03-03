@@ -37,7 +37,7 @@ abstract class AbstractList extends AbstractCollection {
 	 *
 	 * @return $this
 	 */
-	public function reverseSort(Comparator | callable | null $cmp = null): self {
+	public function reverseSort(Comparator|callable|null $cmp = null): self {
 		return $this->sort($cmp)->reverse();
 	}
 }

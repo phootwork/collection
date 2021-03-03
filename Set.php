@@ -23,7 +23,7 @@ class Set extends AbstractList {
 	 *
 	 * @param array|Iterator $collection
 	 */
-	public function __construct(array | Iterator $collection = []) {
+	public function __construct(array|Iterator $collection = []) {
 		$this->add(...$collection);
 	}
 
@@ -35,6 +35,7 @@ class Set extends AbstractList {
 	 * @return $this
 	 */
 	public function add(mixed ...$elements): self {
+		/** @var mixed $element */
 		foreach ($elements as $element) {
 			if (!in_array($element, $this->array, true)) {
 				$this->array[$this->size()] = $element;
