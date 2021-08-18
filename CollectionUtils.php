@@ -122,13 +122,15 @@ class CollectionUtils {
 		}
 
 		/** @var array $arr */
-		return array_map(function (mixed $v): mixed {
-			if (is_object($v) && method_exists($v, 'toArray')) {
-				return static::toArrayRecursive($v);
-			}
+		return array_map(
+			function (mixed $v): mixed {
+				if (is_object($v) && method_exists($v, 'toArray')) {
+					return static::toArrayRecursive($v);
+				}
 
-			return $v;
-		},
-			$arr);
+				return $v;
+			},
+			$arr
+		);
 	}
 }
