@@ -15,7 +15,6 @@ namespace phootwork\collection;
  * @author Thomas Gossmann
  */
 interface Collection extends \Iterator {
-
 	/**
 	 * Resets the collection
 	 * 

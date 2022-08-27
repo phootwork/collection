@@ -17,7 +17,6 @@ use phootwork\lang\AbstractArray;
  * @author Thomas Gossmann
  */
 abstract class AbstractCollection extends AbstractArray implements Collection {
-
 	/**
 	 * Remove all elements from the collection.
 	 */

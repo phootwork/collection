@@ -19,7 +19,6 @@ use Iterator;
  * @author Thomas Gossmann
  */
 class Queue extends AbstractList {
-
 	/**
 	 * Creates a new Queue
 	 * 

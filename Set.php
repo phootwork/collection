@@ -17,7 +17,6 @@ use Iterator;
  * @author Thomas Gossmann
  */
 class Set extends AbstractList {
-
 	/**
 	 * Creates a new Set
 	 *

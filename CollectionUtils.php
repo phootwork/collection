@@ -19,7 +19,6 @@ use stdClass;
  * report to the issue tracker.
  */
 class CollectionUtils {
-
 	/**
 	 * Returns a proper collection for the given array (also transforms nested collections)
 	 * (experimental API)
